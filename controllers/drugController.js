@@ -1,11 +1,11 @@
 var fs = require('fs');
 var Promise = require('bluebird');
-var drugService = require('../service/drugService');
-var drugServiceAsync = Promise.promisifyAll(drugService);
+//var drugService = require('../service/drugService');
+//var drugServiceAsync = Promise.promisifyAll(drugService);
 var moment = require('moment');
 var _ = require('underscore');
 var common = require('../utils/common');
-var config = require('../config');
+//var config = require('../config');
 // pc Controllers
 
 // render prediction page
