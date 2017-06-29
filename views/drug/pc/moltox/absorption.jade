@@ -1,0 +1,84 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 In Silico Predicted Toxic Properties
+    br
+    br
+    .row.fluid
+      .span4
+        for item in items
+          if item.Table_Name == 'Molecule Picture'
+            .well
+              h4 Molecule Depiction
+              br
+              div(align='center')
+                img.img-rounded(src='#{item.Table_Context[0].Structure}', style='PADDING-RIGHT: 20px PADDING-TOP: 20px')
+              br
+              span#pop1.btn.btn-mini.btn-inverse(href='#', rel='popover', data-placement='right', data-content='#{item.Table_Context[0].Molecule}', data-original-title='<b>SMILES</b>') SMILES
+        h4 Molecule properties:
+        for item in items
+          if item.Table_Name == 'Molecule Property'
+            table.table.table-hover.table-condensed
+              thead
+                each tvalue, thead in item.Table_Context[0]
+                  th #{thead}
+              tbody
+                for subitem in item.Table_Context
+                  tr
+                    each bvalue in subitem
+                      if bvalue.indexOf(".svg") > -1
+                        td
+                          object(data='#{bvalue}', width='450', height='200', type='image/svg+xml')
+                      else
+                        td #{bvalue}
+      .span8
+        for item in items
+          if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
+            .well
+              h4 #{item.Table_Name}:
+              table.table.table-hover.table-striped
+                thead
+                  tr
+                    each tvalue, thead in item.Table_Context[0]
+                      th #{thead}
+                tbody
+                  for subitem in item.Table_Context
+                    tr
+                      each bvalue in subitem
+                        if bvalue.indexOf(".svg") > -1
+                          td
+                            object(data='#{bvalue}', width='450', height='200', type='image/svg+xml')
+                        else
+                          td #{bvalue}
+              
+        .row-fluid
+          .span4
+            a.btn.btn-info(type='button', href='/moltox')
+              i.icon-repeat
+              |  Run another prediction
+          .span4
+            form
+              input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
+          .span4
+    br
+    br
+    hr
+
+block scripts
+    script.
+      $(function ()
+      {
+      $("#pop1").popover({
+      html: true,
+      animation: true
+      });
+      });
+    //- script(type='text/javascript', charset='utf-8', language='javascript', src='/pkcsm/static/js/Three49custom.js')
+    //- script(type='text/javascript', charset='utf-8', language='javascript', src='/pkcsm/static/js/GLmol.js')
+    //- link(rel='stylesheet', type='text/css', href='/pkcsm/static/bootstrap/css/DT_bootstrap.css')    
+    //- script(type='text/javascript', charset='utf-8', language='javascript', src='/pkcsm/static/js/jquery_DT.js')
+    //- script(type='text/javascript', charset='utf-8', language='javascript', src='/pkcsm/static/js/jquery.dataTables.js')
+    //- script(type='text/javascript', charset='utf-8', language='javascript', src='/pkcsm/static/bootstrap/js/DT_bootstrap.js')

@@ -1,0 +1,100 @@
+doctype html
+//if lt IE 7
+  html.no-js.lt-ie9.lt-ie8.lt-ie7  
+//if IE 7
+  html.no-js.lt-ie9.lt-ie8  
+//if IE 8
+  html.no-js.lt-ie9  
+// [if gt IE 8] <!
+|  
+html.no-js
+  // <![endif]
+  head
+    meta(charset='utf-8')
+    title MolTox
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Web-version of pkMOL')
+    meta(name='author', content='xiaoxudong')
+    // Styles
+    link(href='/pkcsm/static/bootstrap/css/bootstrap.css', rel='stylesheet')
+    style(type='text/css').
+      body {
+      position: relative;
+      padding-top: 60px;
+      padding-bottom: 40px;
+      }
+      td.dreta {
+      text-align: right;
+      }
+      .alert-info {
+      color: #FF00FF;
+      }
+      .cal-mask {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left:0;
+      background:rgba(0,0,0,0.7);
+      z-index: 9999;
+      text-align:center;
+      padding-top:15%;
+      padding-left:40%;
+      font-size: 40px;
+      color: #fff;
+      }
+    link(href='/pkcsm/static/bootstrap/css/bootstrap-responsive.css', rel='stylesheet')
+    link(href='/pkcsm/static/lightbox/css/lightbox.css', rel='stylesheet')
+    // HTML5 shim, for IE6-8 support of HTML5 elements
+    //if lt IE 9
+      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+    //
+      to paginate tables from http://datatables.net/blog/Twitter_Bootstrap_2
+      NEED TO PUT id="example" in your tables :-)
+      ==================================================
+    // 
+  body
+    // TOP BAR NAVIGATION
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          button.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='/molopt') MolOpt
+          .nav-collapse.collapse
+            ul.nav
+              li
+                a(href='/molopt')
+                  i.icon-white.icon-search
+                  |  Predict
+              li
+                a(href='/molopt/about')
+                  i.icon-white.icon-book
+                  |  About
+    block content
+    footer.container
+      .row
+        .span5
+          img(src='/pkcsm/static/img/logo.gif', style='border: none;', width='250')
+        .span7(align='right')
+          // Access count
+          span(style="font-size:12px;margin-right:20px;")  Page View: #{accesscount}
+          // Internet Content Provider
+          a(href="http://www.miitbeian.gov.cn",style="font-size:12px;margin-right:20px;") 沪ICP备17025598号
+          // Open Knowledge Link
+          a(href='http://opendefinition.org/okd', target='_blank')
+            img(alt='This material is Open Knowledge', border='0', src='http://assets.okfn.org/images/ok_buttons/ok_80x15_blue.png')
+          br
+          br
+          p(aligh='justify')
+            font(size='1')
+              | Best viewed using 
+              a(href='http://www.google.com/chrome') Chrome
+              |  on 1280x1024 resolution and above
+    // script mark here
+    script(src='/pkcsm/static/lightbox/js/jquery-1.11.0.min.js')
+    script(src='/pkcsm/static/lightbox/js/lightbox.min.js')
+    script(src='/pkcsm/static/bootstrap/js/bootstrap.min.js')
+    block scripts

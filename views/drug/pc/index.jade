@@ -1,0 +1,150 @@
+extends ./layouts/layout
+
+block content
+  // main content
+  .container-fluid
+    .row-fluid
+      .span12
+        .navbar
+          .navbar-inner
+            .container-fluid
+              a.btn.btn-navbar(data-target='.navbar-responsive-collapse', data-toggle='collapse')
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.brand(href='#') 网站名
+              .nav-collapse.collapse.navbar-responsive-collapse
+                ul.nav
+                  li.active
+                    a(href='#') 主页
+                  li
+                    a(href='#') 链接
+                  li
+                    a(href='#') 链接
+                  li.dropdown
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                      | 下拉菜单
+                      strong.caret
+                    ul.dropdown-menu
+                      li
+                        a(href='#') 下拉导航1
+                      li
+                        a(href='#') 下拉导航2
+                      li
+                        a(href='#') 其他
+                      li.divider
+                      li.nav-header
+                        | 标签
+                      li
+                        a(href='#') 链接1
+                      li
+                        a(href='#') 链接2
+                ul.nav.pull-right
+                  li
+                    a(href='#') 右边链接
+                  li.divider-vertical
+                  li.dropdown
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                      | 下拉菜单
+                      strong.caret
+                    ul.dropdown-menu
+                      li
+                        a(href='#') 下拉导航1
+                      li
+                        a(href='#') 下拉导航2
+                      li
+                        a(href='#') 其他
+                      li.divider
+                      li
+                        a(href='#') 链接3
+        
+        #carousel-146345.carousel.slide
+          ol.carousel-indicators
+            li(data-slide-to='0', data-target='#carousel-146345')
+            li(data-slide-to='1', data-target='#carousel-146345')
+            li.active(data-slide-to='2', data-target='#carousel-146345')
+          .carousel-inner
+            .item
+              img(alt='', src='img/1.jpg')
+              .carousel-caption
+                h4
+                  | 棒球
+                p
+                  | 棒球运动是一种以棒打球为主要特点，集体性、对抗性很强的球类运动项目，在美国、日本尤为盛行。
+            .item
+              img(alt='', src='img/2.jpg')
+              .carousel-caption
+                h4
+                  | 冲浪
+                p
+                  | 冲浪是以海浪为动力，利用自身的高超技巧和平衡能力，搏击海浪的一项运动。运动员站立在冲浪板上，或利用腹板、跪板、充气的橡皮垫、划艇、皮艇等驾驭海浪的一项水上运动。
+            .item.active
+              img(alt='', src='img/3.jpg')
+              .carousel-caption
+                h4
+                  | 自行车
+                p
+                  | 以自行车为工具比赛骑行速度的体育运动。1896年第一届奥林匹克运动会上被列为正式比赛项目。环法赛为最著名的世界自行车锦标赛。
+          a.left.carousel-control(data-slide='prev', href='#carousel-146345') ‹
+          a.right.carousel-control(data-slide='next', href='#carousel-146345') ›
+
+        form(id="myform")
+          fieldset
+            legend 
+              strong 计算分子毒性
+            label 请输入分子的SMILES格式：
+            input(type='text', name="molecular", placeholder="C1CCCCC1")
+            span.help-block 支持SMILES分子式输入，用户可以使用chemdraw、openbabel等软件将自己的小分子结构转化为SMILES分子式。
+            button.btn.btn-primary(type='submit') 提交
+        
+        table#mytable.table
+          thead
+            tr
+              th
+                | 编号
+              th
+                | 产品
+              th
+                | 交付时间
+              th
+                | 状态
+          tbody
+            tr.success
+              td
+                | 1
+              td
+                | TB - Monthly
+              td
+                | 01/04/2012
+              td
+                | Approved
+            tr.error
+              td
+                | 2
+              td
+                | TB - Monthly
+              td
+                | 02/04/2012
+              td
+                | Declined
+            tr.warning
+              td
+                | 3
+              td
+                | TB - Monthly
+              td
+                | 03/04/2012
+              td
+                | Pending
+            tr.info
+              td
+                | 4
+              td
+                | TB - Monthly
+              td
+                | 04/04/2012
+              td
+                | Call in to confirm
+
+block scripts
+  script(src='/javascripts/pc/main.js')
