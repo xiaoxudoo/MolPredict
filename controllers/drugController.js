@@ -41,7 +41,7 @@ exports.run_example = function(req, res, next){
 
   data = [],
   dataString = '';
-  data.push("CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O")   // stdin的输入字符串：Cc1ccccc1O
+  data.push("CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O",'0.9')   // stdin的输入字符串：Cc1ccccc1O
   py.stdout.on('data', function(data){
     dataString += data.toString();
   });
@@ -65,6 +65,7 @@ exports.run_example = function(req, res, next){
 exports.formSubmit_absorption = function(req, res, next){ 
   var routeName = req.url.split('/')[1]
   req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
+  req.checkBody('significant', 'invalid significant').notEmpty().isNumber();
   req.checkBody('runType', 'invalid type').isString();
   var valiErrors = common.uniqObjArray(req.validationErrors());
   var rst = {"flag":0,"msg":'','data':{}};
@@ -88,7 +89,7 @@ exports.formSubmit_absorption = function(req, res, next){
   data = [],
   dataString = '';
   rst.data.input = req.body.molecular
-  data.push(req.body.molecular)   // stdin的输入字符串：CC(=O)OC1=CC=CC=C1C(=O)O
+  data.push(req.body.molecular, req.body.significant)
   py.stdout.on('data', function(data){
     dataString += data.toString();
   });

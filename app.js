@@ -60,6 +60,9 @@ app.use(expressValidator({
     },
     isCard: function(value) {
         return /^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/.test(value);
+    },
+    isNumber: function(value) {
+        return /^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$/.test(value);
     }
   }
 }));  // validator for express
