@@ -18,7 +18,7 @@ exports.sms_config_new = {
 
 //本项目的本地配置
 exports.drugserver = {
-
+    rabbitHost: '120.77.251.182'
 };
 
 

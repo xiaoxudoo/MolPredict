@@ -1,0 +1,168 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 Welcome to In silico Drug Safety Analysis System
+    .row
+      .span4
+        a.example-image-link(href='/pkcsm/static/img/pkmol.png', data-lightbox='example-1')
+          img.example-image(src='/pkcsm/static/img/pkmol.png', alt='image-1')
+        br
+        br
+        form#myform1(enctype='multipart/form-data', action='/moltox/run_example', method='GET')
+          button.btn.btn-inverse(type='submit', style='margin: 0 auto;') Run example
+        .alert.alert-block
+          button.close(type='button', data-dismiss='alert') ×
+          h4 Disclaimer
+          br
+          p(align='justify')
+            | No molecule information will be retained on the system.
+      // ********************************************************************************************************************************
+      .span7.offset1
+        form#myform2(enctype='application/x-www-form-urlencoded', action='/moltox/silicotox', method='POST')
+          h3
+            | Step 1: Please provide a molecule (SMILES format preferred) 
+            br
+            a#pop1.btn.btn-mini(href='javascript:void(0);', rel='popover', data-placement='bottom', data-content="<p\
+            align='justify'>Please provide a molecule.</p>", data-original-title='<b>Data input</b>') Description
+          .row
+            .span7
+              .well
+                label.control-label
+                  p
+                  h5
+                    font(color='#616D7E') Provide a molecule (SMILES, IUPAC/Commercial Name, CAS Number or InChI Key): 
+                  p
+                input#myinput.span2(type='text', name='molecular', size='200', style="width:200px;")
+                &nbsp;&nbsp
+                input(type="reset", value="Clear", style="width:50px;vertical-align:5px;border-radius:5px;")
+                &nbsp;&nbsp
+                input(type="button", value="Draw Molecule", style="vertical-align:5px;border-radius:5px;", onClick="startEditor();")
+                input#runtype(type='hidden', name='runType', value='')
+                div#errormsg(style="color:red;text-align:left;")
+                br
+                h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O , 126-12-5 , Aspirin
+                p Significance:<input style="vertical-align:0;width:40px;margin-left:10px;" name='significant' type="text" value="0.1" placeholder="0.1">
+          .row
+            .span7
+              hr(style='border-top: 3px solid #eeeeee; border-bottom: 3px solid #ffffff;')
+          h3
+            | Step 2: Please run the prediction 
+            br
+            a#pop3.btn.btn-mini(href='javascript:void(0);', rel='popover', data-placement='top', data-content="<p\
+            align='justify'>Click the Button to run prediction calculations, and wait for two mins ...</p>", data-original-title='<b>Run Prediction</b>') Description
+          .row
+            .span7
+              .well
+                h4 Prediction of Toxicity 
+                br
+                .btn-toolbar
+                  .btn-group
+                    button.btn.btn-primary(type='submit', data-type="hep" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Hepatotoxicity
+                  .btn-group
+                    button.btn.btn-primary(type='submit', data-type="kidney" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Nephrotoxicity
+                  .btn-group
+                    button.btn.btn-primary(type='submit', data-type="card" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Cardiotoxicity
+                  .btn-group
+                    button.btn.btn-primary(type='submit', data-type="cns" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b CNS Toxicity
+                .btn-toolbar
+                  .btn-group
+                    button.btn.btn-warning(type='submit', data-type="mut" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Mutagenicity Genotoxicity
+                  .btn-group
+                    button.btn.btn-warning(type='submit', data-type="lung" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Respiratory Toxicity 
+                  .btn-group
+                    button.btn.btn-warning(type='submit', data-type="carc" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Carcinogenicity    
+                .btn-toolbar     
+                  .btn-group
+                    button.btn.btn-info(type='submit', data-type="rep" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Reproduction Toxicity
+                  .btn-group
+                    button.btn.btn-info(type='submit', data-type="cyto" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Cytotoxicity  
+                  .btn-group
+                    button.btn.btn-info(type='submit', data-type="skin" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Skin Sensitisation
+                .btn-toolbar
+                  .btn-group
+                    button.btn.btn-danger(type='submit', data-type="alert" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Toxic Structural Alerts 
+                  .btn-group
+                    button.btn.btn-danger(type='submit', data-type="p450" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Cytochrome P450 
+                  .btn-group
+                    button.btn.btn-danger(type='submit', data-type="mito" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Mitochondrial Toxicity 
+                .btn-toolbar
+                  .btn-group
+                    button.btn.btn-success(type='submit', data-type="oral" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Acute Oral Toxicity
+                  .btn-group
+                    button.btn.btn-success(type='submit', data-type="off" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Off Targets 
+                .btn-toolbar
+                  .btn-group
+                    button.span6.btn.btn-inverse(type='submit', data-type="all" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b All
+    hr
+  // 悬浮球
+  div.cal-mask(style="display:none;")
+    #wave.wave
+  style.
+    .wave{position:relative;width:200px;height:200px;overflow:hidden;border-radius:50%;background:rgba(255,203,103,.6);text-align:center;display:table-cell;vertical-align:middle;}
+    .wave canvas{position:absolute;left:0;top:0;z-index:1;}
+
+block scripts
+  script(src='/pkcsm/static/js/main.js')
+  script.
+    var smiles = "";
+    var jme = "0 0";
+    function startEditor() {
+    window.open('/pkcsm/jme_window.html','JME','width=500,height=450,scrollbars=no,resizable=yes');
+    }
+    function fromEditor(smiles,jme) {
+    if (smiles=="") {
+    alert ("no molecule submitted");
+    return;
+    }
+    document.getElementById('myinput').value = smiles;
+    }
+
+  script.
+    $(function ()
+    {
+    $("#pop1").popover({
+    trigger:'hover',
+    html: true,
+    animation: true
+    });
+    $("#pop3").popover({
+    trigger:'hover',
+    html: true,
+    animation: true
+    });
+    });

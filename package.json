@@ -7,6 +7,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "amqplib": "^0.5.2",
     "async": "^1.5.0",
     "bluebird": "^3.1.1",
     "body-parser": "~1.15.1",
@@ -22,6 +23,7 @@
     "morgan": "~1.7.0",
     "multer": "^1.2.0",
     "mysql": "^2.11.1",
+    "node-uuid": "^1.4.8",
     "nodemailer": "^2.5.0",
     "request": "^2.67.0",
     "serve-favicon": "~2.3.0",

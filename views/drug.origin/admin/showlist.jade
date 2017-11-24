@@ -1,0 +1,158 @@
+doctype html
+html
+  head
+    title galaxy show list
+    |   
+    meta(name='viewport', content='width=device-width')
+    |   
+    style(type='text/css').
+      body {
+      font-family: arial;
+      }
+      .downs{
+      display: inline-block;
+      width: 120px;
+      height: 40px;
+      font:16px "Microsoft Yahei";
+      line-height: 40px;
+      text-decoration: none;
+      text-align: center;
+      color: #fff;
+      background: #f99;
+      margin-bottom: 20px;
+      margin-right:10px;
+      border-radius: 5px;
+      }
+      .green{
+      background:#5ACF00;
+      }
+      .yellow{
+      background:#F8B535;
+      }
+      .downs:hover{
+      background: #f00;
+      }
+      table {
+      border: 1px solid #ccc;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin: 0 auto;
+      }
+      table tr {
+      border: 1px solid #ddd;
+      padding: 5px;
+      }
+      table th, table td {
+      padding: 10px;
+      text-align: center;
+      }
+      table th {
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 1px;
+      }
+      @media screen and (max-width: 600px) {
+      table {
+      border: 0;
+      }
+      table thead {
+      display: none;
+      }
+      table tr {
+      margin-bottom: 10px;
+      display: block;
+      border-bottom: 2px solid #ddd;
+      }
+      table td {
+      display: block;
+      text-align: right;
+      font-size: 13px;
+      border-bottom: 1px dotted #ccc;
+      }
+      table td:last-child {
+      border-bottom: 0;
+      }
+      table td:before {
+      content: attr(data-label);
+      float: left;
+      text-transform: uppercase;
+      font-weight: bold;
+      }
+      }
+  body
+    h2
+      | &#x62A5;&#x540D;&#x4EBA;&#x6570;&#x6700;&#x5927;&#x503C;&#xFF1A;
+      span #{rst.inventory}
+      | &#xFF0C; &#x5DF2;&#x62A5;&#x540D;&#xFF08;&#x652F;&#x4ED8;&#x6210;&#x529F;&#xFF09;&#x4EBA;&#x6570;&#xFF1A;
+      span #{rst.number}
+    |   
+    a.downs(href='/galaxy/downlist?p=galaxy&v=1.1') 下载有效订单
+    a.downs(href='/galaxy/downlist?p=galaxy&v=1.2') 下载所有订单
+    |   
+    table
+      thead
+        tr
+          th &#x8BA2;&#x5355;&#x53F7;
+          |             
+          th &#x8BA2;&#x5355;&#x91D1;&#x989D;
+          |             
+          th &#x8BA2;&#x5355;&#x72B6;&#x6001;
+          |             
+          th &#x4E0B;&#x5355;&#x5E73;&#x53F0;
+          |             
+          th &#x8BA2;&#x5355;&#x521B;&#x5EFA;&#x65F6;&#x95F4;
+          |             
+          th &#x59D3;&#x540D;
+          |             
+          th &#x8054;&#x7CFB;&#x7535;&#x8BDD;
+          |             
+          th &#x7535;&#x5B50;&#x90AE;&#x4EF6;
+          |             
+          th &#x5730;&#x5740;
+          |             
+          th &#x8EAB;&#x4EFD;&#x8BC1;
+          |             
+          th &#x804C;&#x4E1A;&#x72B6;&#x51B5;
+          |             
+          th &#x76EE;&#x524D;&#x7684;&#x961F;&#x4F0D;
+          |             
+          th &#x64C5;&#x957F;&#x4F4D;&#x7F6E;
+          |             
+          th &#x6700;&#x9AD8;&#x8DB3;&#x7403;&#x6C34;&#x5E73;
+      |     
+      tbody
+        each greenOrder in rst.greenOrder
+          tr.green
+            td= greenOrder.ID
+            td= greenOrder.AMOUNT
+            td= greenOrder.STATUS
+            td= greenOrder.platform
+            td= greenOrder.CREATE_TIME
+            td= greenOrder.adminNo
+            td= greenOrder.phone
+            td= greenOrder.email
+            td= greenOrder.address
+            td= greenOrder.card
+            td= greenOrder.state
+            td= greenOrder.team
+            td= greenOrder.position
+            td= greenOrder.experience
+        each yellowOrder in rst.yellowOrder
+          tr.yellow
+            td= yellowOrder.ID
+            td= yellowOrder.AMOUNT
+            td= yellowOrder.STATUS
+            td= yellowOrder.platform
+            td= yellowOrder.CREATE_TIME
+            td= yellowOrder.adminNo
+            td= yellowOrder.phone
+            td= yellowOrder.email
+            td= yellowOrder.address
+            td= yellowOrder.card
+            td= yellowOrder.state
+            td= yellowOrder.team
+            td= yellowOrder.position
+            td= yellowOrder.experience
