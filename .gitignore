@@ -5,8 +5,8 @@ node_modules/
 !computed/
 !www/
 !controllers/
-!public/
-!routes/
+!public/**
+!routes/**
 !utils/
 !views/
 !config.js
