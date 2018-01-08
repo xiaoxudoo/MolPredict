@@ -17,7 +17,7 @@ block content
               div(align='center')
                 img.img-rounded(src='#{item.Table_Context[0].Structure}', style='PADDING-RIGHT: 20px PADDING-TOP: 20px')
               br
-              span#pop1.btn.btn-mini.btn-inverse(href='#', rel='popover', data-placement='right', data-content='#{item.Table_Context[0].Molecule}', data-original-title='<b>SMILES</b>') SMILES
+              span#pop1.btn.btn-mini.btn-inverse(href='#', rel='popover', data-placement='right', data-content='#{item.Table_Context[0].Molecule}', data-original-title='<b>SMILES</b>') Mol
         h4 Molecule properties:
         for item in items
           if item.Table_Name == 'Molecule Property'
@@ -50,7 +50,10 @@ block content
                       each bvalue in subitem
                         if bvalue.indexOf(".svg") > -1
                           td
-                            object(data='#{bvalue}', width='450', height='200', type='image/svg+xml')
+                            object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
+                        else if bvalue.indexOf("csv.gz") > -1
+                          td
+                            a(href="#{bvalue}") download
                         else
                           td #{bvalue}
               
