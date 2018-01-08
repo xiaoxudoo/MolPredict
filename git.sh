@@ -1,4 +1,4 @@
-a#! /bin/bash
+#! /bin/bash
 # @author xiaoxudoo from leike 2017-02-17
 # 自动打包上传到代码仓库
 
