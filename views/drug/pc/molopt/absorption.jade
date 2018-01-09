@@ -45,14 +45,15 @@ block content
                     each tvalue, thead in item.Table_Context[0]
                       th #{thead}
                 tbody
-                  for subitem in item.Table_Context
+                  for subitem, i in item.Table_Context
                     tr
+                      td #{subitem}
                       td  #{subitem[0]} <br/> 
-                        input(type="radios")
+                        input(type='radio', onclick='onRadioClick(i)')
                       td
                         object(data='#{subitem[1]}', width='400', height='200', type='image/svg+xml')
-                      input(type='hidden', id="arr1" value='#{subitem[2]}')
-                      input(type='hidden', id="arr2" value='#{subitem[3]}')
+                        input(type='hidden', value='#{subitem[2]}')
+                        input(type='hidden', value='#{subitem[3]}')
               
         .row-fluid
           .span4
