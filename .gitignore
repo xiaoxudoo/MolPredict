@@ -1,11 +1,11 @@
 **
 node_modules/
 !app.js
-!bin/**
-!computed/**
-!www/**
+!bin/*
+!computed/*
+!www/*
 !controllers/**
-!public/**
+!public/*
 !routes/**
 !utils/**
 !views/**
