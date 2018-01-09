@@ -23,7 +23,8 @@ router.get('/molopt/about', drugController.theory)
 router.get('/molopt/run_example', drugController.run_example)
 router.post('/molopt/silicotox', drugController.formSubmit_absorption);
 
-//router.get('/wechat', wechatController.test)
-//router.post('/wechat', wechatController.reply)
+router.get('/molopt_text', function (req, res, next) {
+  res.render(`drug/pc/molopt/absorption`, {});
+})
 
 module.exports = router;
