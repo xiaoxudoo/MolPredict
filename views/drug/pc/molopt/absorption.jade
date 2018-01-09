@@ -47,15 +47,14 @@ block content
                 tbody
                   for subitem, i in item.Table_Context
                     tr
-                      //- td JSON.stringify(#{subitem})
-                      //- td  #{subitem[0]} <br/> 
-                      //-   input(type='radio', onclick='onRadioClick(#{i})')
-                      //- td
-                      //-   object(data=subitem[1], width='400', height='200', type='image/svg+xml')
-                      //-   input(type='hidden', value='#{subitem[2]}')
-                      //-   input(type='hidden', value='#{subitem[3]}')
                       each bvalue, j in subitem
-                        td #{bvalue}, #{j}
+                        if bvalue.indexOf(".svg") > -1
+                          td
+                            object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
+                        else if j == 0
+                          td #{bvalue}
+                        else 
+                          input(type='hidden', value='#{bvalue}')
 
               
         .row-fluid
