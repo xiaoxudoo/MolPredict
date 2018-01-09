@@ -47,15 +47,12 @@ block content
                 tbody
                   for subitem in item.Table_Context
                     tr
-                      each bvalue in subitem
-                        if bvalue.indexOf(".svg") > -1
-                          td
-                            object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
-                        else if bvalue.indexOf("csv.gz") > -1
-                          td
-                            a(href="#{bvalue}") download
-                        else
-                          td #{bvalue}
+                      td  #{subitem[0]} <br/> 
+                        input(type="radios")
+                      td
+                        object(data='#{subitem[1]}', width='400', height='200', type='image/svg+xml')
+                      input(type='hidden', id="arr1" value='#{subitem[2]}')
+                      input(type='hidden', id="arr2" value='#{subitem[3]}')
               
         .row-fluid
           .span4
