@@ -1,13 +1,5 @@
-**
 node_modules/
-!app.js
-!bin/**
-!computed/**
-!www/**
-!controllers/**
-!public/
-!routes/**
-!utils/**
-!views/**
-!config.js
-!package.json
+
+pv.data
+.gitignore
+.vscode
