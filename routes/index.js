@@ -22,9 +22,8 @@ router.get('/molopt', drugController.prediction)
 router.get('/molopt/about', drugController.theory)
 router.get('/molopt/run_example', drugController.run_example)
 router.post('/molopt/silicotox', drugController.formSubmit_absorption);
+router.post('/molopt/silicoopt', drugController.formSubmit_optimisation);
 
-router.get('/molopt_text', function (req, res, next) {
-  res.render(`drug/pc/molopt/absorption`, {});
-})
+
 
 module.exports = router;
