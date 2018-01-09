@@ -51,10 +51,8 @@ block content
                         if bvalue.indexOf(".svg") > -1
                           td
                             object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
-                        else if j == 0
+                        else
                           td #{bvalue}
-                        else 
-                          input(type='hidden', value='#{bvalue}')
 
               
         .row-fluid
