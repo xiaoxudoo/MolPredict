@@ -52,8 +52,9 @@ block content
                           td
                             object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
                         else if j == 'Index'
-                          td #{bvalue} <br/>
-                          input(type='radio', onclick='onRadioClick(#{j})')
+                          td 
+                            #{bvalue}
+                            input(type='radio', onclick='onRadioClick(#{i})')
                         else 
                           td #{bvalue}
               
