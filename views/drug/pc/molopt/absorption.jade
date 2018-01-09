@@ -55,15 +55,15 @@ block content
                           td 
                             #{bvalue}
                             br
-                            input(type='radio', name="index" onclick='onRadioClick(#{i})')
+                            input(type='radio', name="index" value="#{subitem[rsmi]}")
                         else 
                           td #{bvalue}
               
         .row-fluid
           .span4
-            a.btn.btn-info(type='button', href='/molopt')
+            button.span6.btn.btn-inverse(type='')
               i.icon-repeat
-              |  Run another prediction
+              |  next
           .span4
             form
               input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
