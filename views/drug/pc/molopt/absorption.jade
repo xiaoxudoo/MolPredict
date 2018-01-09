@@ -37,7 +37,7 @@ block content
       .span8
         for item in items
           if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
-            .well
+            form#form3.well(enctype='application/x-www-form-urlencoded', action='/molopt/silicoopt', method='POST')
               h4 #{item.Table_Name}:
               table.table.table-hover.table-striped
                 thead
@@ -55,19 +55,19 @@ block content
                           td 
                             #{bvalue}
                             br
-                            input(type='radio', name="index" value="#{subitem['rsmi']}")
+                            input(type='radio', name="rsmi" value="#{subitem['rsmi']}")
                         else 
                           td #{bvalue}
-              
-        .row-fluid
-          .span4
-            button.span6.btn.btn-inverse(type='')
-              i.icon-repeat
-              |  next
-          .span4
-            form
-              input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
-          .span4
+              //- checkbox
+              .row-fluid
+                input(type='checkbox', name='mode', value='1') nihao1
+                input(type='checkbox', name='mode', value='2') nihao2
+                input(type='checkbox', name='mode', value='3') nihao3
+              .row-fluid
+                .span4
+                  input.button.btn(type='submit', value='Next')
+                .span4
+                  input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
     br
     br
     hr

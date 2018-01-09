@@ -120,4 +120,65 @@ exports.formSubmit_absorption = function (req, res, next) {
   });
 }
 
+exports.formSubmit_optimisation = function (req, res, next) {
+  var routeName = 'molopt'
+  req.checkBody('rsmi', 'rsmi').notEmpty().isString();
+  req.checkBody('mode', 'mode').notEmpty().isNumber();
+  var valiErrors = common.uniqObjArray(req.validationErrors());
+  var rst = { "flag": 0, "msg": '', 'data': {} };
+  if (valiErrors) {
+    //表单验证错误
+    rst.flag = 1
+    rst.msg = valiErrors[0].msg
+    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+  }
+  // 线程数目
+  console.log(global.threadCount++);
+  var exec = require('child_process').exec;
+  //var cmdStr = 'ps -C python | wc -l';
+  var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
+  exec(cmdStr, function (err, stdout, stderr) {
+    if (stdout && stdout > 1) {
+      rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
+      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+      return false;
+    } else {
+
+      
+      var calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}.py` : `ca_${routeName}.py`
+      var cp = require('child_process'),
+        py = cp.spawn('python', [calTypePy]),
+
+        data = [],
+        dataString = '';
+      // rst.data.input = req.body.molecular
+      data.push(req.body.rsmi, req.body.mode)
+      py.stdout.on('data', function (data) {
+        dataString += data.toString();
+      });
+
+      py.stdout.on('end', function () {
+        global.threadCount--;
+        // when dataString is not avaliable
+        if (dataString == '' || dataString == null) {
+          res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+        }
+        //  deal json string
+        console.log('debug')
+        var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
+        res.render(`drug/pc/${routeName}/optimisation.jade`, { 'items': json })
+      });
+
+      py.on('error', function (err) {
+        console.log(new Date());
+        console.log('开启失败', err);
+        process.exit();
+      });
+
+      py.stdin.write(JSON.stringify(data));
+      py.stdin.end();
+    }
+  });
+}
+
 
