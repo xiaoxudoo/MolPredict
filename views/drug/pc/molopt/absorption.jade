@@ -51,9 +51,11 @@ block content
                         if bvalue.indexOf(".svg") > -1
                           td
                             object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
-                        else
+                        else if j == 'Index'
+                          td #{bvalue} <br/>
+                          input(type='radio', onclick='onRadioClick(#{j})')
+                        else 
                           td #{bvalue}
-
               
         .row-fluid
           .span4
