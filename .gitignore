@@ -11,4 +11,3 @@ node_modules/
 !views/**
 !config.js
 !package.json
-!pv.data
