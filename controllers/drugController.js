@@ -123,7 +123,7 @@ exports.formSubmit_absorption = function (req, res, next) {
 exports.formSubmit_optimisation = function (req, res, next) {
   var routeName = 'molopt'
   req.checkBody('rsmi', 'rsmi').notEmpty().isString();
-  req.checkBody('mode', 'mode').notEmpty().isNumber();
+  req.checkBody('mode', 'mode').notEmpty().isString();
   var valiErrors = common.uniqObjArray(req.validationErrors());
   var rst = { "flag": 0, "msg": '', 'data': {} };
   if (valiErrors) {
