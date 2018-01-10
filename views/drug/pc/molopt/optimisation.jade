@@ -48,8 +48,14 @@ block content
                   for subitem in item.Table_Context
                     tr
                       each bvalue in subitem
-                        td #{bvalue}
-              
+                        if bvalue.indexOf(".svg") > -1
+                          td
+                            object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
+                        else if bvalue.indexOf(".rsmi") > -1
+                          td
+                            a(href="#{bvalue}") download
+                        else
+                          td #{bvalue}
         .row-fluid
           .span4
             a.btn.btn-info(type='button', href='/molopt')
