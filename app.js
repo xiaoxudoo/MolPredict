@@ -92,8 +92,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  console.log(err)
-  res.render('error', {});
+  res.render('error', { });
 });
 
 console.log("drug server start, " + utilsHelper.dateTimestamp());
