@@ -146,7 +146,7 @@ exports.formSubmit_optimisation = function (req, res, next) {
 
 
       var cp = require('child_process'),
-        py = cp.spawn('python', 'ca_replace_molopt.py'),
+        py = cp.spawn('python', ['ca_replace_molopt.py']),
         data = [],
         dataString = '';
 
