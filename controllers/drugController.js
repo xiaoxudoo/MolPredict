@@ -144,10 +144,9 @@ exports.formSubmit_optimisation = function (req, res, next) {
       return false;
     } else {
 
-      
-      var calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}.py` : `ca_${routeName}.py`
+
       var cp = require('child_process'),
-        py = cp.spawn('python', [calTypePy]),
+        py = cp.spawn('python', 'ca_replace_molopt.py'),
 
         data = [],
         dataString = '';
