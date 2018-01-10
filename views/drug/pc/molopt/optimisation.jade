@@ -45,9 +45,9 @@ block content
                     each tvalue, thead in item.Table_Context[0]
                       th #{thead}
                 tbody
-                  for subitem, i in item.Table_Context
+                  for subitem in item.Table_Context
                     tr
-                      each bvalue, j in subitem
+                      each bvalue in subitem
                         if bvalue.indexOf(".svg") > -1
                           td
                             object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
@@ -56,9 +56,9 @@ block content
               
         .row-fluid
           .span4
-            button.span6.btn.btn-inverse(type='')
+            a.btn.btn-info(type='button', href='/molopt')
               i.icon-repeat
-              |  next
+              |  Run another prediction
           .span4
             form
               input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
