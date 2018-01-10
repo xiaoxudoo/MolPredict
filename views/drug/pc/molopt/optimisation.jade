@@ -48,11 +48,7 @@ block content
                   for subitem in item.Table_Context
                     tr
                       each bvalue in subitem
-                        if bvalue.indexOf(".rsmi") > -1
-                          td
-                            a(href="#{bvalue}") download
-                        else
-                          td #{bvalue}
+                        td #{bvalue}
               
         .row-fluid
           .span4
