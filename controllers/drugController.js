@@ -147,9 +147,9 @@ exports.formSubmit_optimisation = function (req, res, next) {
 
       var cp = require('child_process'),
         py = cp.spawn('python', 'ca_replace_molopt.py'),
-
         data = [],
         dataString = '';
+
       // rst.data.input = req.body.molecular
       data.push(req.body.rsmi, req.body.mode)
       py.stdout.on('data', function (data) {
@@ -163,7 +163,7 @@ exports.formSubmit_optimisation = function (req, res, next) {
           res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
         }
         //  deal json string
-        console.log('debug')
+
         var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
         res.render(`drug/pc/${routeName}/optimisation.jade`, { 'items': json })
       });
