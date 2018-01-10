@@ -7,7 +7,43 @@ block content
       h2 In Silico Predicted Toxic Properties
     br
     br
-    
+    .row.fluid
+      .span4
+        for item in items
+          if item.Table_Name == 'Molecule Picture'
+            .well
+              h4 Molecule Depiction
+              br
+              div(align='center')
+                img.img-rounded(src='#{item.Table_Context[0].Structure}', style='PADDING-RIGHT: 20px PADDING-TOP: 20px')
+              br
+              span#pop1.btn.btn-mini.btn-inverse(href='#', rel='popover', data-placement='right', data-content='#{item.Table_Context[0].Molecule}', data-original-title='<b>SMILES</b>') Mol
+        h4 Molecule properties:
+        for item in items
+          if item.Table_Name == 'Molecule Property'
+            table.table.table-hover.table-condensed
+              thead
+                each tvalue, thead in item.Table_Context[0]
+                  th #{thead}
+              tbody
+                for subitem in item.Table_Context
+                  tr
+                    each bvalue in subitem
+                      if bvalue.indexOf(".svg") > -1
+                        td
+                          object(data='#{bvalue}', width='450', height='200', type='image/svg+xml')
+                      else
+                        td #{bvalue}
+     
     br
     hr
 
+block scripts
+    script.
+      $(function ()
+      {
+      $("#pop1").popover({
+      html: true,
+      animation: true
+      });
+      });
