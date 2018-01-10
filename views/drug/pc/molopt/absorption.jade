@@ -34,57 +34,7 @@ block content
                           object(data='#{bvalue}', width='450', height='200', type='image/svg+xml')
                       else
                         td #{bvalue}
-      .span8
-        for item in items
-          if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
-            form#form3(enctype='application/x-www-form-urlencoded', action='/molopt/silicoopt', method='POST')
-              .well  
-                h4 #{item.Table_Name}:
-                table.table.table-hover.table-striped
-                  thead
-                    tr
-                      each tvalue, thead in item.Table_Context[0]
-                        th #{thead}
-                  tbody
-                    for subitem, i in item.Table_Context
-                      tr
-                        each bvalue, j in subitem
-                          if bvalue.indexOf(".svg") > -1
-                            td
-                              object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
-                          else if j == 'Index'
-                            td 
-                              #{bvalue}
-                              br
-                              input(type='radio', name="rsmi" value="#{subitem['frag_name']}")
-                          else 
-                            td #{bvalue}
-              //- checkbox
-              .row-fluid
-                .span4
-                  input(type='checkbox', name='mode', value='1')
-                  | nihao1
-                .span4
-                  input(type='checkbox', name='mode', value='2')
-                  | nihao2
-                .span4  
-                  input(type='checkbox', name='mode', value='3')
-                  | nihao3
-                .span4
-                  input(type='checkbox', name='mode', value='4') 
-                  | nihao4
-                .span4
-                  input(type='checkbox', name='mode', value='5')
-                  | nihao5
-                .span4  
-                  input(type='checkbox', name='mode', value='6')
-                  | nihao6
-              .row-fluid
-                .span4
-                  input.btn(type='submit', value='Next')
-                .span4
-                  input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
-    br
+      
     br
     hr
 
