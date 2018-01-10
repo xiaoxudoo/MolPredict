@@ -165,6 +165,7 @@ exports.formSubmit_optimisation = function (req, res, next) {
         //  deal json string
 
         var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
+        console.log(JSON.stringify(json))
         res.render(`drug/pc/${routeName}/optimisation.jade`, { 'items': json })
       });
 
