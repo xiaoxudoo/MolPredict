@@ -44,7 +44,11 @@ block content
                   tr
                     each tvalue, thead in item.Table_Context[0]
                       th #{thead}
-                
+                tbody
+                  for subitem in item.Table_Context
+                    tr
+                      each bvalue in subitem
+                        td #{bvalue}
         .row-fluid
           .span4
             a.btn.btn-info(type='button', href='/molopt')
