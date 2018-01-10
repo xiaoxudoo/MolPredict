@@ -35,15 +35,7 @@ block content
                       else
                         td #{bvalue}
       .span8
-        for item in items
-          if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
-            .well
-              h4 #{item.Table_Name}:
-              table.table.table-hover.table-striped
-                thead
-                  tr
-                    each tvalue, thead in item.Table_Context[0]
-                      th #{thead}
+        
                 
         .row-fluid
           .span4
@@ -53,7 +45,6 @@ block content
           .span4
             form
               input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
-          .span4
     br
     br
     hr
