@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var drugController = require('../controllers/drugController');
+var toxController = require('../controllers/toxController');
+var optController = require('../controllers/optController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
