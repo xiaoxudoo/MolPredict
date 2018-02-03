@@ -7,8 +7,8 @@ router.get('/', function(req, res, next) {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
   res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
   res.setHeader("Expires", "0"); // Proxies.
-  //res.render('drug/pc/index');
-  res.redirect('/moltox')
+  res.render('drug/pc/about');
+  // res.redirect('/moltox')
 });
 
 // pkmol
