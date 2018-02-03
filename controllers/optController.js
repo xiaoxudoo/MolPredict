@@ -63,7 +63,6 @@ exports.run_example = function (req, res, next) {
 exports.formSubmit_absorption = function (req, res, next) {
   const routeName = 'molopt';
   req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
-  req.checkBody('significant', 'invalid significant').notEmpty().isNumber();
   req.checkBody('runType', 'invalid type').isString();
   var valiErrors = common.uniqObjArray(req.validationErrors());
   var rst = { "flag": 0, "msg": '', 'data': {} };
@@ -91,7 +90,7 @@ exports.formSubmit_absorption = function (req, res, next) {
         data = [],
         dataString = '';
       rst.data.input = req.body.molecular
-      data.push(req.body.molecular, req.body.significant)
+      data.push(req.body.molecular)
       py.stdout.on('data', function (data) {
         dataString += data.toString();
       });
