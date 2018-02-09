@@ -1,6 +1,6 @@
 //数据库的配置
 exports.dbConfig = {
-	host: '39.108.10.96',
+	host: 'localhost', // 39.108.10.96
 	user: 'root',
 	password: '123',
 	database: 'xundrug_server',
@@ -21,7 +21,7 @@ exports.drugserver = {
 	rabbitHost: '120.77.251.182'
 };
 
-exports.port = '8080'
+exports.port = '80' // 8080
 
 exports.logger_path = 'logs/'
 
