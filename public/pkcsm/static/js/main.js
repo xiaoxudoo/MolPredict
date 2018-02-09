@@ -1,95 +1,40 @@
-//控制表单提交，放在判断外面
+// signin
+$("#btn_login").click(function () {
+	var loginObj = new Object();
+	loginObj.accountNo = $("#inputAccount").val();
+	loginObj.pwd = $("#inputPassword").val();
+	var loginJson = JSON.stringify(loginObj); //将JSON对象转化为JSON字符  
+	$.post('/validateSignin', { "loginObj": loginJson }, function (e) {
+		console.log(e);
+		if (e.accountMsg) {
+			$("#accountDiv").addClass("has-error");
+			$("#accountMsg").removeClass("hidden");
 
-$('#myform1').submit(function(evt) {
-  addprogress();
-  return true;
+			$("#pwdDiv").removeClass("has-error");
+			$("#pwdMsg").addClass("hidden");
+		} else if (e.pwdMsg) {
+			$("#accountDiv").removeClass("has-error");
+			$("#accountMsg").addClass("hidden");
 
+			$("#pwdDiv").addClass("has-error");
+			$("#pwdMsg").removeClass("hidden");
+		} else if (e.user) {
+			$("#loginForm").submit();
+		}
+	});
 });
 
-$('#myform2 button').click(function(evt){
-   var type = $(this).data('type')
-   $('#runtype').val(type)
-})
-
-$('#myform2').submit(function(evt) {
-
-  var val = $(this).find('#myinput').val() ;
-  if(!val) {
-    $("#errormsg").html("分子不能为空");
-    return false;
-  } else {
-    $("#errormsg").html('');
-    addprogress();
-    return true;
-  }
-  
-});
-
-function addprogress() {
-  $('.cal-mask').show();
-  var wave = (function () {
-    var ctx;
-    var waveImage;
-    var canvasWidth;
-    var canvasHeight;
-    var needAnimate = false;
-    function init (callback) {
-    var wave = document.getElementById('wave');
-    var canvas = document.createElement('canvas');
-    if (!canvas.getContext) return;
-    ctx = canvas.getContext('2d');
-    canvasWidth = wave.offsetWidth;
-    canvasHeight = wave.offsetHeight;
-    canvas.setAttribute('width', canvasWidth);
-    canvas.setAttribute('height', canvasHeight);
-    wave.appendChild(canvas);
-    waveImage = new Image();
-    waveImage.onload = function () {
-    waveImage.onload = null;
-    callback();
-    }
-    waveImage.src = '/pkcsm/static/img/wave.png';
-    }
-    function animate () {
-    var waveX = 0;
-    var waveY = 0;
-    var waveX_min = -203;
-    var waveY_max = canvasHeight * 0.7;
-    var requestAnimationFrame =
-    window.requestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function (callback) { window.setTimeout(callback, 1000 / 60); };
-    function loop () {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    if (!needAnimate) return;
-    if (waveY < waveY_max) waveY += 1.5;
-    if (waveX < waveX_min) waveX = 0; else waveX -= 3;
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.beginPath();
-    ctx.arc(canvasWidth/2, canvasHeight/2, canvasHeight/2, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fill();
-    ctx.globalCompositeOperation = 'source-in';
-    ctx.drawImage(waveImage, waveX, canvasHeight - waveY);
-    requestAnimationFrame(loop);
-    }
-    loop();
-    }
-    function start () {
-    if (!ctx) return init(start);
-    needAnimate = true;
-    setTimeout(function () {
-    if (needAnimate) animate();
-    }, 500);
-    }
-    function stop () {
-    needAnimate = false;
-    }
-    return {start: start, stop: stop};
-    }());
-    wave.start();
-}
-
+// signup
+// $("#btn_register").click(function () {
+// 	var signupObj = new Object();
+// 	signupObj.nickname = $("#inputAccount").val();
+// 	signupObj.email = $("#inputEmail").val();
+// 	signupObj.password = $("#inputPassword").val();
+// 	signupObj.repassword = $("#inputRePassword").val();
+// 	var signupJson = JSON.stringify(signupObj); //将JSON对象转化为JSON字符  
+// 	$.post('/validateSignup', { "signupObj": signupJson }, function (e) {
+// 		console.log(e);
+		
+// 	});
+// });
 

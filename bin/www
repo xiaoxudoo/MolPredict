@@ -9,12 +9,13 @@ global.threadCount = 0;
 var app = require('../app');
 var debug = require('debug')('drug:server');
 var http = require('http');
+var config = require('../config');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || config.port || '80');
 app.set('port', port);
 
 /**

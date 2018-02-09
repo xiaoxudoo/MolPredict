@@ -37,7 +37,7 @@ block content
       .span8
         for item in items
           if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
-            form#form3(enctype='application/x-www-form-urlencoded', action='/molopt/silicoopt', method='POST')
+            form#form3(enctype='application/x-www-form-urlencoded', action='/molopt/optimize', method='POST')
               .well  
                 h4 #{item.Table_Name}:
                 table.table.table-hover.table-striped
