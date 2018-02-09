@@ -7,9 +7,12 @@ node_modules/
 !www/**
 !controllers
 !controllers/*.js
+!middlewares
+!middlewares/**
 !public/**
 !routes/**
 !utils/**
 !views/**
 !config.js
+!user.sql
 !package.json
