@@ -11,9 +11,11 @@ node_modules/
 !middlewares/**
 !public
 !public/**
+!routes
 !routes/**
 !utils
 !utils/**
+!views
 !views/**
 !config.js
 !user.sql
