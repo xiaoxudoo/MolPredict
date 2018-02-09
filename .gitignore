@@ -11,6 +11,7 @@ node_modules/
 !middlewares/**
 !public/**
 !routes/**
+!utils
 !utils/**
 !views/**
 !config.js
