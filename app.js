@@ -14,7 +14,7 @@ const utilsHelper = require('./utils/utils_helper');
 const routes = require('./routes/index');
 global.DB = require("./utils/dbutil.js").Instance();
 ///定义实体
-DB.define({key:'User',name:'xundrug_user',fields:['id_','username','password','sex','updated','status','role','email','lastlogintime','registertime','lastloginip']});
+DB.define({ key: 'User', name: 'xundrug_user', fields: ['id_', 'username', 'password', 'sex', 'updated', 'status', 'role', 'email', 'lastlogintime', 'registertime', 'lastloginip'] });
 
 console.logCopy = console.log.bind(console);
 console.log = function () {
@@ -82,8 +82,16 @@ app.use(expressValidator({
 	}
 }));  // validator for express
 
-app.use('/', routes);
 
+// 添加模板必需的三个变量
+app.use(function (req, res, next) {
+	res.locals.user = req.session.user
+	res.locals.success = req.flash('success').toString()
+	res.locals.error = req.flash('error').toString()
+	next()
+})
+
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,8 +1,8 @@
 //数据库的配置
 exports.dbConfig = {
 	host: 'localhost', // 39.108.10.96
-	user: 'root',
-	password: '123',
+	user: 'xundrug',
+	password: 'xundrug123',
 	database: 'xundrug_server',
 	debug: true,
 	connectionLimit: 1000

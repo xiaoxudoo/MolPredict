@@ -13,14 +13,12 @@ router.get('/', function(req, res, next) {
   res.render('drug/pc/index');
 });
 
-// login
+// login/logout/register
 router.get('/signin', check.checkNotLogin, signController.getSignin);
-router.post('/validateSignin', check.checkNotLogin, signController.validateSignin);
 router.post('/signin', check.checkNotLogin, signController.postSignin);
 router.get('/signout', check.checkLogin, signController.getSignout);
 router.get('/signup', check.checkNotLogin, signController.getSignup);
 router.post('/signup', check.checkNotLogin, signController.postSignup);
-// logout
 
 // moltox
 router.get('/moltox', toxController.prediction)

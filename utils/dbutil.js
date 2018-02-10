@@ -78,7 +78,7 @@ Table.prototype.insert = function (values, callback) {
 				if (err) {
 					callback(err, null);
 				} else {
-					callback(null, values["id_"]);//TODO　返回生成ＩＤ
+					callback(null, values["id_"]); //TODO　返回生成ID
 				}
 				connection.release(); //release
 			});
