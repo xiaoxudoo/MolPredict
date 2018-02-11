@@ -165,6 +165,7 @@ exports.cal_tox = function (req, res, next) {
               logger.error(`orderId:${orderId},userid:${userid},status:${status} 调用python失败 => ${err}`);
               process.exit();
             });
+            res.redirect("/home");
           }
         });
       }
