@@ -28,7 +28,8 @@ router.post('/signup', check.checkNotLogin, signController.postSignup);
 router.get('/moltox', toxController.prediction)
 router.get('/moltox/about', toxController.theory)
 router.get('/moltox/run_example', toxController.run_example)
-router.post('/moltox/silicotox', check.checkLogin, toxController.formSubmit_absorption);
+router.post('/moltox/silicotox', toxController.formSubmit_absorption);  // TODO： 暂时不需要登录
+// router.post('/moltox/silicotox', check.checkLogin, toxController.formSubmit_absorption);
 
 // molopt
 router.get('/molopt', optController.prediction)
