@@ -77,10 +77,11 @@ exports.cal_tox = function (req, res, next) {
   var exec = require('child_process').exec;
   var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';  
   exec(cmdStr, function (err, stdout, stderr) {
+    let isRunning = null;
     if (process.env.NODE_ENV === 'production') {
-      const isRunning = stdout && stdout > 1;
+      isRunning = stdout && stdout > 1;
     } else {
-      const isRunning = stdout && stdout < 1;
+      isRunning = stdout && stdout < 1;
     }
     // 如果未登录
     if(!req.session.user) {
