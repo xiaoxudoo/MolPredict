@@ -17,6 +17,5 @@ node_modules/
 !utils/**
 !views
 !views/**
-!user.sql
 !package.json
 !README.md
