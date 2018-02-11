@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   res.render('drug/pc/index');
 });
 
-router.get('/home', function(req, res, next) {
+router.get('/home', check.checkLogin, function(req, res, next) {
   res.render('drug/pc/home');
 });
 

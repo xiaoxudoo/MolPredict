@@ -1,6 +1,6 @@
 //数据库的配置
 exports.dbConfig = {
-	host: 'localhost', // 39.108.10.96
+	host: '39.108.10.96', // 39.108.10.96
 	user: 'xundrug',
 	password: 'xundrug123',
 	database: 'xundrug_server',
