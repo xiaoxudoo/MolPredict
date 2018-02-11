@@ -43,6 +43,10 @@ html.no-js
       font-size: 40px;
       color: #fff;
       }
+      .brand_small {
+      font-size: 16px!important;
+      margin-left: -30px!important;
+      }
     link(href='/pkcsm/static/bootstrap/css/bootstrap-responsive.min.css', rel='stylesheet')
     link(href='/pkcsm/static/lightbox/css/lightbox.css', rel='stylesheet')
     // HTML5 shim, for IE6-8 support of HTML5 elements
@@ -69,7 +73,13 @@ html.no-js
                 a(href='/molopt/about')
                   i.icon-white.icon-book
                   |  About
-          a.brand(href='/', style='float:right;') Xundrug
+          .text-right(style="float:right;")
+            a.brand(href='/') Xundrug&nbsp; |
+            if user 
+              a.brand.brand_small(href='/home') #{user.username}&nbsp; |
+              a.brand.brand_small(href='/signout') 退出
+            else         
+              a.brand.brand_small(href='/signin') 登录
           
     block content
     footer.container

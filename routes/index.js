@@ -13,6 +13,10 @@ router.get('/', function(req, res, next) {
   res.render('drug/pc/index');
 });
 
+router.get('/home', function(req, res, next) {
+  res.render('drug/pc/home');
+});
+
 // login/logout/register
 router.get('/signin', check.checkNotLogin, signController.getSignin);
 router.post('/signin', check.checkNotLogin, signController.postSignin);
