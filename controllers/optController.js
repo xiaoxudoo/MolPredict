@@ -1,9 +1,9 @@
 var fs = require('fs');
 var common = require('../utils/common');
-// pc Controllers
+var uuid = require("node-uuid");
 
-// render prediction page
-exports.prediction = function (req, res, next) {
+// render index page
+exports.index = function (req, res, next) {
   var file = "pv.data"
   var pv = 0;
   pv = fs.readFileSync(file);
@@ -13,7 +13,7 @@ exports.prediction = function (req, res, next) {
   res.render(`drug/pc${req.url}/prediction`, { 'accesscount': pv });
 }
 
-exports.theory = function (req, res, next) {
+exports.about = function (req, res, next) {
   const routeName = 'molopt';
   res.render(`drug/pc${req.url}`);
 }
@@ -60,7 +60,7 @@ exports.run_example = function (req, res, next) {
   });
 }
 
-exports.formSubmit_absorption = function (req, res, next) {
+exports.cal_opt_step_one = function (req, res, next) {
   const routeName = 'molopt';
   req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
   req.checkBody('runType', 'invalid type').isString();
@@ -79,7 +79,7 @@ exports.formSubmit_absorption = function (req, res, next) {
   var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 1) {
-      rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
+      rst.msg = 'The server is busy at the moment. Please try again two minitues later Or LOGIN to queue up a job!'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
       return false;
     } else {
@@ -119,7 +119,7 @@ exports.formSubmit_absorption = function (req, res, next) {
   });
 }
 
-exports.formSubmit_optimisation = function (req, res, next) {
+exports.cal_opt_step_two = function (req, res, next) {
   var routeName = 'molopt';
   req.checkBody('rsmi', 'rsmi').notEmpty().isString();
   req.checkBody('mode', 'mode').notEmpty().isString();
@@ -138,7 +138,7 @@ exports.formSubmit_optimisation = function (req, res, next) {
   var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 1) {
-      rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
+      rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job!'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
       return false;
     } else {
@@ -179,4 +179,7 @@ exports.formSubmit_optimisation = function (req, res, next) {
   });
 }
 
+exports.query_opt_result = function (req, res, next) {
+  
+}
 

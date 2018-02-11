@@ -1,9 +1,10 @@
-var fs = require('fs');
-var common = require('../utils/common');
-// pc Controllers
+const fs = require('fs');
+const common = require('../utils/common');
+const uuid = require("node-uuid");
+const logger = require('../utils/logger');
 
-// render prediction page
-exports.prediction = function (req, res, next) {
+// render index page
+exports.index = function (req, res, next) {
   var file = "pv.data"
   var pv = 0;
   pv = fs.readFileSync(file);
@@ -13,7 +14,7 @@ exports.prediction = function (req, res, next) {
   res.render(`drug/pc${req.url}/prediction`, { 'accesscount': pv });
 }
 
-exports.theory = function (req, res, next) {
+exports.about = function (req, res, next) {
   const routeName = 'moltox';
   res.render(`drug/pc${req.url}`);
 }
@@ -22,13 +23,12 @@ exports.run_example = function (req, res, next) {
   const routeName = 'moltox';
   var rst = { "flag": 0, "msg": '', 'data': {} };
   // 线程数目
-  console.log(global.threadCount++);
   var exec = require('child_process').exec;
-  //var cmdStr = 'ps -C python | wc -l';
   var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
+  // TODO... 后续优化run_example
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 1) {
-      rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
+      rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
       return false;
     } else {
@@ -43,7 +43,6 @@ exports.run_example = function (req, res, next) {
       });
 
       py.stdout.on('end', function () {
-        global.threadCount--;
         var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
         res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
       });
@@ -60,8 +59,9 @@ exports.run_example = function (req, res, next) {
   });
 }
 
-exports.formSubmit_absorption = function (req, res, next) {
+exports.cal_tox = function (req, res, next) {
   const routeName = 'moltox';
+  const Order = DB.get("Order");
   req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
   req.checkBody('significant', 'invalid significant').notEmpty().isNumber();
   req.checkBody('runType', 'invalid type').isString();
@@ -73,52 +73,106 @@ exports.formSubmit_absorption = function (req, res, next) {
     rst.msg = valiErrors[0].msg
     res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
   }
-  // 线程数目
-  console.log(global.threadCount++);
+
   var exec = require('child_process').exec;
-  //var cmdStr = 'ps -C python | wc -l';
-  var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
+  var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';  
   exec(cmdStr, function (err, stdout, stderr) {
-    if (stdout && stdout > 1) {
-      rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
-      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
-      return false;
+    if (process.env.NODE_ENV === 'production') {
+      const isRunning = stdout && stdout > 1;
     } else {
-      var calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}.py` : `ca_${routeName}.py`
-      var cp = require('child_process'),
-        py = cp.spawn('python', [calTypePy]),
+      const isRunning = stdout && stdout < 1;
+    }
+    // 如果未登录
+    if(!req.session.user) {
+      if (isRunning) { // python计算的加锁条件
+        rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job！'
+        res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+        return false;
+      } else {
+        const calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}.py` : `ca_${routeName}.py`
 
-        data = [],
-        dataString = '';
-      rst.data.input = req.body.molecular
-      data.push(req.body.molecular, req.body.significant)
-      py.stdout.on('data', function (data) {
-        dataString += data.toString();
-      });
+        const { spawn } = require('child_process');
+        
+        const py = spawn('python', [calTypePy]);
 
-      py.stdout.on('end', function () {
-        global.threadCount--;
-        // when dataString is not avaliable
-        if (dataString == '' || dataString == null) {
-          res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+        var data = [], dataString = '';
+
+        rst.data.input = req.body.molecular;
+
+        data.push(req.body.molecular, req.body.significant);
+
+        py.stdout.on('data', function (data) {
+          dataString += data.toString();
+        });
+
+        py.stdout.on('end', function () {
+          // when dataString is not avaliable
+          if (dataString == '' || dataString == null) {
+            res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+          }
+          //  deal json string
+          var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
+          res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
+        });
+
+        py.on('error', function (err) {
+          logger.error(`开启失败 => ${err}`);
+          process.exit();
+        });
+
+        py.stdin.write(JSON.stringify(data));
+        py.stdin.end();
+      }
+    } else { // 登录后...
+      // 生成订单
+      const orderId = uuid.v1();
+      const userid = req.session.user.id_;
+      let parameters = {
+        calType: 'molTox',
+        calSort: req.body.runType,
+        parameters: {
+          molecular: req.body.molecular,
+          significant: req.body.significant
         }
-        //  deal json string
-        console.log('debug')
-        var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
-      });
+      };
+      parameters = JSON.stringify(parameters);
+      if (isRunning) { // python计算的加锁条件
+        // 将订单状态置为'排队中'; 向xundrug_order表中增加一条数据：订单号，订单状态，用户Id等
+        Order.insert({id_: orderId, userid: userid, status: '9', parameters: parameters }, function (err, result) {
+          if (err) {
+            logger.error(`orderId:${orderId},userid:${userid},status:${status} 订单插入失败 => ${err}`);
+            next(err);            
+          } else {
+            res.redirect("/home");
+          }
+        });
+      } else { // 调用python程序直接计算。
+        const calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}_sql.py` : `ca_${routeName}_sql.py`
+        const { spawn } = require('child_process');
+        const data = [];
+        data.push(orderId);
 
-      py.on('error', function (err) {
-        console.log(new Date());
-        console.log('开启失败', err);
-        process.exit();
-      });
-
-      py.stdin.write(JSON.stringify(data));
-      py.stdin.end();
+        Order.insert({id_: orderId, userid: userid, status: '0', parameters: parameters, startTime: new Date() }, function (err, result) {
+          if (err) {
+            logger.error(`orderId:${orderId},userid:${userid},status:${status} 订单插入失败 => ${err}`);
+            next(err);
+          } else {
+            const py = spawn('python', [calTypePy]);
+            py.stdin.write(JSON.stringify(data));
+            py.stdin.end();
+            py.on('error', function (err) {
+              logger.error(`orderId:${orderId},userid:${userid},status:${status} 调用python失败 => ${err}`);
+              process.exit();
+            });
+          }
+        });
+      }
     }
   });
 }
 
-
+exports.query_tox_result = function (req, res, next) {
+  const orderId = req.params.id;
+  res.send(orderId);
+}
 

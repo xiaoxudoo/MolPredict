@@ -15,6 +15,7 @@ const routes = require('./routes/index');
 global.DB = require("./utils/dbutil.js").Instance();
 ///定义实体
 DB.define({ key: 'User', name: 'xundrug_user', fields: ['id_', 'username', 'password', 'sex', 'updated', 'status', 'role', 'email', 'lastlogintime', 'registertime', 'lastloginip'] });
+DB.define({ key: 'Order', name: 'xundrug_order', fields: ['id_', 'userid', 'parameters', 'status', 'startTime', 'endTime', 'results', 'createTime', 'updateTime'] });
 
 console.logCopy = console.log.bind(console);
 console.log = function () {

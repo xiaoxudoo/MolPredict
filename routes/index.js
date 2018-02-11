@@ -25,17 +25,18 @@ router.get('/signup', check.checkNotLogin, signController.getSignup);
 router.post('/signup', check.checkNotLogin, signController.postSignup);
 
 // moltox
-router.get('/moltox', toxController.prediction)
-router.get('/moltox/about', toxController.theory)
+router.get('/moltox', toxController.index)
+router.get('/moltox/about', toxController.about)
 router.get('/moltox/run_example', toxController.run_example)
-router.post('/moltox/silicotox', toxController.formSubmit_absorption);  // TODO： 暂时不需要登录
-// router.post('/moltox/silicotox', check.checkLogin, toxController.formSubmit_absorption);
+router.post('/moltox/silicotox', toxController.cal_tox);
+router.get('/moltox/silicotox/:id', toxController.query_tox_result);
 
 // molopt
-router.get('/molopt', optController.prediction)
-router.get('/molopt/about', optController.theory)
+router.get('/molopt', optController.index)
+router.get('/molopt/about', optController.about)
 router.get('/molopt/run_example', optController.run_example)
-router.post('/molopt/silicoopt', check.checkLogin, optController.formSubmit_absorption);
-router.post('/molopt/optimize', check.checkLogin, optController.formSubmit_optimisation);
+router.post('/molopt/silicoopt', optController.cal_opt_step_one);
+router.post('/molopt/optimize', optController.cal_opt_step_two);
+router.get('/moltox/optimize/:id', optController.query_opt_result);
 
 module.exports = router;

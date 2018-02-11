@@ -17,5 +17,6 @@ node_modules/
 !utils/**
 !views
 !views/**
+!pm2.config.json
 !package.json
 !README.md

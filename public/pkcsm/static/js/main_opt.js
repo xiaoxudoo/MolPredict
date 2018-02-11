@@ -15,7 +15,7 @@ $('#myform2').submit(function (evt) {
 
     var val = $(this).find('#myinput').val();
     if (!val) {
-        $("#errormsg").html("分子不能为空");
+        $("#errormsg").html("The molecules cannot be empty.");
         window.scrollTo(0,0);
         return false;
     } else {
