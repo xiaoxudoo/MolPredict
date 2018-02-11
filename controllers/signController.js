@@ -20,10 +20,10 @@ exports.postSignin = function (req, res, next) {
   // 校验参数
   try {
     if (!name.length) {
-      throw new Error('请填写用户名')
+      throw new Error('Please fill in the user name.')
     }
     if (!password.length) {
-      throw new Error('请填写密码')
+      throw new Error('Please fill in the password.')
     }
   } catch (e) {
     req.flash('error', e.message)
@@ -38,7 +38,7 @@ exports.postSignin = function (req, res, next) {
       next(err);
     } else {
       if (result && result.length > 0) {
-        req.flash('success', '登录成功');
+        req.flash('success', 'Logout success.');
         let user = result[0];
         delete user.password;
         req.session.user = user;
@@ -49,7 +49,7 @@ exports.postSignin = function (req, res, next) {
         User.update(params);
         res.redirect("/");
       } else {
-        req.flash('error', '用户名或密码错误')
+        req.flash('error', 'Incorrect username or password.')
         return res.redirect('back')
       }
     }
@@ -58,7 +58,7 @@ exports.postSignin = function (req, res, next) {
 
 exports.getSignout = function (req, res, next) {
   req.session.user = null
-  req.flash('success', '登出成功')
+  req.flash('success', 'Logout Success!')
   // 登出成功后跳转到主页
   res.redirect('/signin')
 }
@@ -78,16 +78,16 @@ exports.postSignup = function (req, res, next) {
   const emailReg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
   try {
     if (!(username.length >= 1 && username.length <= 20)) {
-      throw new Error('用户名请限制在 1-20 个字符')
+      throw new Error('Please limit the user name to 1-20 characters.')
     }
     if (!emailReg.test(email)) {
-      throw new Error('邮箱格式不正确')
+      throw new Error('Incorrect email format.')
     }
     if (password.length < 6) {
-      throw new Error('密码至少 6 个字符')
+      throw new Error('Password at least 6 characters.')
     }
     if (password !== repassword) {
-      throw new Error('两次输入密码不一致')
+      throw new Error('Entered passwords differ.')
     }
   } catch (e) {
     req.flash('error', e.message)
@@ -99,7 +99,7 @@ exports.postSignup = function (req, res, next) {
       next(err);
     } else {
       if (result && result.length > 0) {
-        req.flash('error', '邮箱不能重复，请更换邮箱');
+        req.flash('error', 'The emailcannot be duplicated, please change the email.');
         return res.redirect('/signup');
       } else {
         var sha1 = crypto.createHash('sha1');

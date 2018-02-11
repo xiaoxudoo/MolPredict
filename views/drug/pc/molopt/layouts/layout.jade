@@ -77,9 +77,9 @@ html.no-js
             a.brand(href='/') Xundrug&nbsp; |
             if user 
               a.brand.brand_small(href='/home') #{user.username}&nbsp; |
-              a.brand.brand_small(href='/signout') 退出
+              a.brand.brand_small(href='/signout') logout
             else         
-              a.brand.brand_small(href='/signin') 登录
+              a.brand.brand_small(href='/signin') login
           
     block content
     footer.container
