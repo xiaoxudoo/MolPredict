@@ -4,7 +4,51 @@ block content
   // MAIN CONTENT
   .container
     .hero-unit
-      | eMolTox Order List：
+      h3 eMolTox Order List：
+      table.table.table-bordered.table-striped.table-condensed
+        thead
+          tr
+            td 计算输入参数
+            td 计算开始时间
+            td 计算结束时间
+            td 计算状态
+        tbody
+          each order in tox_orders
+            tr
+              td #{order.parameters}
+              td #{order.startTime}
+              td #{order.endTime}
+              td 
+                if order.status == 1
+                  a(href='/moltox/silicotox/#{order.id_}') 计算成功
+                else if order.status == 9
+                  | 排队中
+                else if order.status == 0
+                  | 计算中
+                else if order.status == 2
+                  | 计算失败
     .hero-unit
-      | eMolOpt Order List：
+      h3 eMolOpt Order List：
+      table(class='table table-bordered table-hover')
+        thead
+          tr
+            td 计算输入参数
+            td 计算开始时间
+            td 计算结束时间
+            td 计算状态
+        tbody
+          each order in opt_orders
+            tr
+              td #{order.parameters}
+              td #{new Date(order.startTime)}
+              td #{order.endTime}
+              td 
+                if order.status == 1
+                  a(href='/molopt/silicoopt/#{order.id_}') 计算成功
+                else if order.status == 9
+                  | 排队中
+                else if order.status == 0
+                  | 计算中
+                else if order.status == 2
+                  | 计算失败
 block scripts

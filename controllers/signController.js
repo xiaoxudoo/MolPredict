@@ -1,5 +1,5 @@
-var crypto = require("crypto");
-
+const crypto = require("crypto");
+const logger = require('../utils/logger');
 
 function getClientIp(req) {
   return req.connection.remoteAddress || req.headers['x-forwarded-for'] || req.headers['x-real-ip'] ||
@@ -113,6 +113,29 @@ exports.postSignup = function (req, res, next) {
             res.redirect("/signin");
           }
         });
+      }
+    }
+  });
+}
+
+exports.home = function (req, res, next) {
+  const Order = DB.get("Order");
+  const userid = req.session.user.id_;
+  Order.where({ userid }, function (err, result) {
+    if (err) {
+      next(err);
+    } else {
+      if (result && result.length > 0) {
+        const tox_result = [], opt_result = [];
+        result.forEach(element => {
+          const parameters = JSON.parse(element.parameters);
+          if(parameters.calType == 'molTox') {
+            tox_result.push(element);
+          } else if(parameters.calType == 'molOpt') {
+            opt_result.push(element);
+          }
+        });
+        res.render('drug/pc/home', { 'tox_orders': tox_result, 'opt_orders': opt_result });
       }
     }
   });

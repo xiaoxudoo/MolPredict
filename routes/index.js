@@ -13,9 +13,7 @@ router.get('/', function(req, res, next) {
   res.render('drug/pc/index');
 });
 
-router.get('/home', check.checkLogin, function(req, res, next) {
-  res.render('drug/pc/home');
-});
+router.get('/home', check.checkLogin, signController.home);
 
 // login/logout/register
 router.get('/signin', check.checkNotLogin, signController.getSignin);
@@ -37,6 +35,6 @@ router.get('/molopt/about', optController.about)
 router.get('/molopt/run_example', optController.run_example)
 router.post('/molopt/silicoopt', optController.cal_opt_step_one);
 router.post('/molopt/optimize', optController.cal_opt_step_two);
-router.get('/moltox/optimize/:id', optController.query_opt_result);
+router.get('/molopt/optimize/:id', optController.query_opt_result);
 
 module.exports = router;

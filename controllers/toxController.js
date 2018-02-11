@@ -131,7 +131,7 @@ exports.cal_tox = function (req, res, next) {
       let parameters = {
         calType: 'molTox',
         calSort: req.body.runType,
-        parameters: {
+        params: {
           molecular: req.body.molecular,
           significant: req.body.significant
         }
