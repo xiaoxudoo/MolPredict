@@ -33,7 +33,7 @@ exports.run_example = function (req, res, next) {
       return false;
     } else {
       var cp = require('child_process'),
-        py = cp.spawn('python', [`ca_all_${routeName}.py`]),
+        py = cp.spawn('python', [`./xundrug_python/ca_all_${routeName}.py`]),
 
         data = [],
         dataString = '';
@@ -90,7 +90,7 @@ exports.cal_tox = function (req, res, next) {
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
         return false;
       } else {
-        const calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}.py` : `ca_${routeName}.py`
+        const calTypePy = req.body.runType ? `./xundrug_python/ca_${req.body.runType}_${routeName}.py` : `./xundrug_python/ca_${routeName}.py`
 
         const { spawn } = require('child_process');
         
@@ -148,7 +148,7 @@ exports.cal_tox = function (req, res, next) {
           }
         });
       } else { // 调用python程序直接计算。
-        const calTypePy = req.body.runType ? `ca_${req.body.runType}_${routeName}_sql.py` : `ca_${routeName}_sql.py`
+        const calTypePy = req.body.runType ? `./xundrug_python/ca_${req.body.runType}_${routeName}_sql.py` : `./xundrug_python/ca_${routeName}_sql.py`
         const { spawn } = require('child_process');
         const data = [];
         data.push(orderId);
