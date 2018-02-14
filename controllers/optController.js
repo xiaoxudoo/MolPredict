@@ -146,7 +146,7 @@ exports.cal_opt_step_two = function (req, res, next) {
 
 
       var cp = require('child_process'),
-        py = cp.spawn('python', ['${python_path}/ca_replace_molopt.py']),
+        py = cp.spawn('python', [`${python_path}/ca_replace_molopt.py`]),
         data = [],
         dataString = '';
 
