@@ -11,6 +11,8 @@ node_modules/
 !middlewares/**
 !public
 !public/**
+public/static
+public/static2
 !routes
 !routes/**
 !utils
