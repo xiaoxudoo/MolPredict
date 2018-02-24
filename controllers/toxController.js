@@ -157,10 +157,7 @@ exports.cal_tox = function (req, res, next) {
             logger.error(`orderId:${orderId},userid:${userid},status:${status} 订单插入失败 => ${err}`);
             next(err);
           } else {
-            const data = [];
-            data.push(calTypePy); 
-            data.push(orderId);
-            const py = spawn('python', data);
+            const py = spawn('python', [calTypePy, orderId]);
             py.on('error', function (err) {
               logger.error(`orderId:${orderId},userid:${userid},status:${status} 调用python失败 => ${err}`);
               process.exit();
