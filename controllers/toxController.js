@@ -140,7 +140,7 @@ exports.cal_tox = function (req, res, next) {
       parameters = JSON.stringify(parameters);
       if (isRunning) { // python计算的加锁条件
         // 将订单状态置为'排队中'; 向xundrug_order表中增加一条数据：订单号，订单状态，用户Id等
-        Order.insert({id_: orderId, userid: userid, status: '9', parameters: parameters }, function (err, result) {
+        Order.insert({id_: orderId, userid: userid, status: '1', parameters: parameters }, function (err, result) {
           if (err) {
             logger.error(`orderId:${orderId},userid:${userid},status:${status} 订单插入失败 => ${err}`);
             next(err);            
@@ -152,7 +152,7 @@ exports.cal_tox = function (req, res, next) {
         const calTypePy = `${python_path}/ca_manager.py`; // req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}_sql.py` : `${python_path}/ca_${routeName}_sql.py`
         const { spawn } = require('child_process');
 
-        Order.insert({id_: orderId, userid: userid, status: '0', parameters: parameters, startTime: new Date() }, function (err, result) {
+        Order.insert({id_: orderId, userid: userid, status: '5', parameters: parameters, startTime: new Date() }, function (err, result) {
           if (err) {
             logger.error(`orderId:${orderId},userid:${userid},status:${status} 订单插入失败 => ${err}`);
             next(err);

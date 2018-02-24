@@ -19,13 +19,13 @@ block content
               td #{order.startTime}
               td #{order.endTime}
               td 
-                if order.status == 1
+                if order.status == 9
                   a(href='/moltox/silicotox/#{order.id_}') 计算成功
-                else if order.status == 9
+                else if order.status == 1
                   | 排队中
-                else if order.status == 0
+                else if order.status == 5
                   | 计算中
-                else if order.status == 2
+                else if order.status == 8
                   | 计算失败
     .hero-unit
       h3 eMolOpt Order List：
@@ -43,12 +43,12 @@ block content
               td #{new Date(order.startTime)}
               td #{order.endTime}
               td 
-                if order.status == 1
+                if order.status == 9
                   a(href='/molopt/silicoopt/#{order.id_}') 计算成功
-                else if order.status == 9
+                else if order.status == 1
                   | 排队中
-                else if order.status == 0
+                else if order.status == 5
                   | 计算中
-                else if order.status == 2
+                else if order.status == 8
                   | 计算失败
 block scripts
