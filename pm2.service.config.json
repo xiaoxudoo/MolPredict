@@ -1,0 +1,21 @@
+{
+  "name": "express-xundrug-service",
+  "script": "./bin/www",
+  "cwd": "./",
+  "watch": [
+    "./controllers",
+    "./routes"
+  ],
+  "ignore_watch": [
+    "node_modules",
+    "logs"
+  ],
+  "watch_options": {
+    "followSymlinks": false
+  },
+  "error_file" : "~/logs/express-xundrug-service/app-err.log",
+  "out_file"   : "~/logs/express-xundrug-service/app-out.log",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
