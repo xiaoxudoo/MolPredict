@@ -11,3 +11,7 @@ create user 'test'@'%' identified by '123456';
 
 ### 当前改造前的版本号
 8dc305af55e99996b658762feee9bf6e3eb6b055
+
+### molopt
+frag_name: radio
+desired_property: checkbox

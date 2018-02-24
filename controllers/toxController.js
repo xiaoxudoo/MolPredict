@@ -2,7 +2,8 @@ const fs = require('fs');
 const common = require('../utils/common');
 const uuid = require("node-uuid");
 const logger = require('../utils/logger');
-const { python_path } = require('../config');
+const {python_path} = require('../config.js');
+
 // render index page
 exports.index = function (req, res, next) {
   var file = "pv.data"
@@ -148,19 +149,15 @@ exports.cal_tox = function (req, res, next) {
           }
         });
       } else { // 调用python程序直接计算。
-        const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}_sql.py` : `${python_path}/ca_${routeName}_sql.py`
+        const calTypePy = `${python_path}/ca_manager.py`; // req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}_sql.py` : `${python_path}/ca_${routeName}_sql.py`
         const { spawn } = require('child_process');
-        const data = [];
-        data.push(orderId);
 
         Order.insert({id_: orderId, userid: userid, status: '0', parameters: parameters, startTime: new Date() }, function (err, result) {
           if (err) {
             logger.error(`orderId:${orderId},userid:${userid},status:${status} 订单插入失败 => ${err}`);
             next(err);
           } else {
-            const py = spawn('python', [calTypePy]);
-            py.stdin.write(JSON.stringify(data));
-            py.stdin.end();
+            const py = spawn('python', [calTypePy, orderId]);
             py.on('error', function (err) {
               logger.error(`orderId:${orderId},userid:${userid},status:${status} 调用python失败 => ${err}`);
               process.exit();
