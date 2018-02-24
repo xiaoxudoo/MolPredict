@@ -12,7 +12,9 @@ node_modules/
 !public
 !public/**
 public/static
+public/static/**
 public/static2
+public/static2/**
 !routes
 !routes/**
 !utils
