@@ -114,6 +114,7 @@ exports.cal_opt_step_one = function (req, res, next) {
 exports.cal_opt_step_two = function (req, res, next) {
   const routeName = 'molopt';
   const Order = DB.get("Order");
+  // req.checkBody('molecular', 'molecular').notEmpty().isString();
   req.checkBody('rsmi', 'rsmi').notEmpty().isString();
   req.checkBody('mode', 'mode').notEmpty().isString();
   var valiErrors = common.uniqObjArray(req.validationErrors());
@@ -179,6 +180,7 @@ exports.cal_opt_step_two = function (req, res, next) {
         calType: 'molOpt',
         calSort: 'replace',
         params: {
+          // molecular: req.body.molecular,
           frag_name: req.body.rsmi,
           desired_property: req.body.mode
         }

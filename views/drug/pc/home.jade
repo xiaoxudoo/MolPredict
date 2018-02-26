@@ -3,58 +3,74 @@ extends ./layouts/layout
 block content
   // MAIN CONTENT
   .container
-    .hero-unit
-      h3 eMolTox Order List：
-      table.table.table-bordered.table-striped.table-condensed
-        thead
-          tr
-            td 计算输入参数
-            td 计算开始时间
-            td 计算结束时间
-            td 计算状态
-            td 订单操作
-        tbody
-          each order in tox_orders
+    ul.nav.nav-tabs
+      li.active
+        a(href='#tab1', data-toggle='tab') eMolTox
+      li
+        a(href='#tab2', data-toggle='tab') eMolOpt
+    .tab-content
+      #tab1.tab-pane.active.hero-unit
+        p.text-center eMolTox Order List
+        table.table.table-bordered.table-striped.table-condensed
+          thead
             tr
-              td #{order.parameters}
-              td #{order.startTime}
-              td #{order.endTime}
-              td 
-                if order.status == 9
-                  a(href='/moltox/silicotox/#{order.id_}') 计算成功
-                else if order.status == 1
-                  | 排队中
-                else if order.status == 5
-                  | 计算中
-                else if order.status == 8
-                  | 计算失败
-              td 
-                button.btn.btn-danger(onclick='deleteorder(\'' + order.id_ + '\')') 删除订单
-    .hero-unit
-      h3 eMolOpt Order List：
-      table(class='table table-bordered table-hover')
-        thead
-          tr
-            td 计算输入参数
-            td 计算开始时间
-            td 计算结束时间
-            td 计算状态
-            td 订单操作
-        tbody
-          each order in opt_orders
+              th Order create time
+              th Molecular
+              th Model
+              th Significant
+              th Start time of cal.
+              th End time of cal.
+              th Status
+              th Actions
+          tbody
+            each order in tox_orders
+              tr
+                td #{new Date(order.createTime).Format("yyyy-M-d hh:mm:ss")}
+                td(style="max-width:150px;overflow:scroll;") #{JSON.parse(order.parameters).params.molecular}
+                td #{JSON.parse(order.parameters).calSort}
+                td(style="width:100px;overflow:scroll;") #{JSON.parse(order.parameters).params.significant}
+                td #{new Date(order.startTime).Format("yyyy-M-d hh:mm:ss")}
+                td #{new Date(order.endTime).Format("yyyy-M-d hh:mm:ss")}
+                td 
+                  if order.status == 9
+                    a(href='/moltox/silicotox/#{order.id_}') Success
+                  else if order.status == 1
+                    | Queue
+                  else if order.status == 5
+                    | in Calculating...
+                  else if order.status == 8
+                    | Failure
+                td(style="max-width:100px;overflow:scroll;")
+                  button.btn.btn-danger( onclick='deleteorder(\'' + order.id_ + '\')') delete
+      #tab2.tab-pane.hero-unit
+        p.text-center eMolOpt Order List
+        table(class='table table-bordered table-hover')
+          thead
             tr
-              td #{order.parameters}
-              td #{new Date(order.startTime)}
-              td #{order.endTime}
-              td 
-                if order.status == 9
-                  a(href='/molopt/optimize/#{order.id_}') 计算成功
-                else if order.status == 1
-                  | 排队中
-                else if order.status == 5
-                  | 计算中
-                else if order.status == 8
-                  | 计算失败
-              td
-                button.btn.btn-danger(onclick='deleteorder(\'' + order.id_ + '\')') 删除订单
+              th Order create time
+              th Frag_name
+              th Desired_property
+              th Start time of cal.
+              th End time of cal.
+              th Status
+              th Actions
+          tbody
+            each order in opt_orders
+              tr
+                td #{new Date(order.createTime).Format("yyyy-M-d hh:mm:ss")}
+                td #{JSON.parse(order.parameters).params.frag_name}
+                td #{JSON.parse(order.parameters).params.desired_property}
+                td #{new Date(order.startTime).Format("yyyy-M-d hh:mm:ss")}
+                td #{new Date(order.endTime).Format("yyyy-M-d hh:mm:ss")}
+                td 
+                  if order.status == 9
+                    a(href='/molopt/optimize/#{order.id_}') Success
+                  else if order.status == 1
+                    | Queue
+                  else if order.status == 5
+                    | in Calculating...
+                  else if order.status == 8
+                    | Failure
+                td(style="max-width:100px;overflow:scroll;")
+                  button.btn.btn-danger(onclick='deleteorder(\'' + order.id_ + '\')') delete
 block scripts
