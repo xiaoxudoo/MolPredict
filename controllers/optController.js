@@ -141,10 +141,10 @@ exports.cal_opt_step_two = function (req, res, next) {
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
         return false;
       } else {
-        const { spawn } = require('child_process'),
-        py = spawn('python', [`${python_path}/ca_replace_molopt.py`]),
-        data = [],
-        dataString = '';
+        const { spawn } = require('child_process');
+        py = spawn('python', [`${python_path}/ca_replace_molopt.py`]);
+        const data = [];
+        let dataString = '';
 
         // rst.data.input = req.body.molecular
         data.push(req.body.rsmi, req.body.mode)
