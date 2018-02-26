@@ -12,6 +12,7 @@ block content
             td 计算开始时间
             td 计算结束时间
             td 计算状态
+            td 订单操作
         tbody
           each order in tox_orders
             tr
@@ -27,6 +28,8 @@ block content
                   | 计算中
                 else if order.status == 8
                   | 计算失败
+              td 
+                button.btn.btn-danger(onclick='deleteorder(\'' + order.id_ + '\')') 删除订单
     .hero-unit
       h3 eMolOpt Order List：
       table(class='table table-bordered table-hover')
@@ -36,6 +39,7 @@ block content
             td 计算开始时间
             td 计算结束时间
             td 计算状态
+            td 订单操作
         tbody
           each order in opt_orders
             tr
@@ -51,4 +55,6 @@ block content
                   | 计算中
                 else if order.status == 8
                   | 计算失败
+              td
+                button.btn.btn-danger(onclick='deleteorder(\'' + order.id_ + '\')') 删除订单
 block scripts

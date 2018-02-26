@@ -121,7 +121,7 @@ exports.postSignup = function (req, res, next) {
 exports.home = function (req, res, next) {
   const Order = DB.get("Order");
   const userid = req.session.user.id_;
-  Order.where({ userid }, function (err, result) {
+  Order.where({ userid }, {'createTime': 'DESC'}, function (err, result) {
     if (err) {
       next(err);
     } else {

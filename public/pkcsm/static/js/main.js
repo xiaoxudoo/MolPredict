@@ -17,3 +17,11 @@ if (window.location.href.indexOf('signin') > -1) {
         window.localStorage.setItem('loginInfo', JSON.stringify(loginObj));
     }, false);
 }
+
+const deleteorder = function (id) {
+    console.log(id);
+    var r = window.confirm("Are you sure to delete this record?");
+    if (r == true) {
+        window.location.href = `/delete/${id}`
+    }
+}

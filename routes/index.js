@@ -3,6 +3,7 @@ var router = express.Router();
 var toxController = require('../controllers/toxController');
 var optController = require('../controllers/optController');
 var signController = require('../controllers/signController');
+var orderController = require('../controllers/orderController');
 const check = require('../middlewares/check');
 
 /* GET home page. */
@@ -36,5 +37,8 @@ router.get('/molopt/run_example', optController.run_example)
 router.post('/molopt/silicoopt', optController.cal_opt_step_one);
 router.post('/molopt/optimize', optController.cal_opt_step_two);
 router.get('/molopt/optimize/:id', optController.query_opt_result);
+
+// order
+router.get('/delete/:id', orderController.deleteOrder);
 
 module.exports = router;
