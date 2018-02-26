@@ -6,7 +6,7 @@ block content
 		.modal-dialog
 			.modal-content
 				.modal-header
-					h1.text-primary Login
+					h2.text-primary Login
 				.modal-body
 					if error
 						.text-error(style='margin-bottom:10px;') #{error}
@@ -22,10 +22,10 @@ block content
 								input#inputPassword.form-control(name='password', type='password', placeholder='password', required='')
 						br
 						#codeDiv.form-group-lg
-							label.sr-only(for='inputPassword') CAPTCHA:
+							label.sr-only(for='inputCaptcha') CAPTCHA:
 							.input-group
-								input#inputCaptcha.form-control(style='width:100px;', name='captcha', type='text', required='')
-								img(src='#{code}')
+								input#inputCaptcha.form-control(style='width:100px;', size='8', name='captcha', type='text', required='')
+								img(style='cursor:pointer;margin-bottom:10px;margin-left:2px;', src='/captcha/1', onclick="javascript:this.src='/captcha/'+Math.random()", alt='captcha', width="100" height="50")
 						br
 						.checkbox
 							label
@@ -34,7 +34,7 @@ block content
 						br
 						.form-group
 							button#btn_login.btn.btn-primary.btn-lg(type='submit', style='margin-right:10px;') Login
-							a#btn_register.btn.btn-default.btn-lg(href='/signup') Register
+							a#btn_register.btn.btn-default.btn-lg(href='/signup', style='margin-right:10px;') Register
+							a(href='/search_pass') forgot your password?
 
 block scripts
-	script(src='https://www.google.com/recaptcha/api.js')

@@ -1,0 +1,33 @@
+extends ./layouts/layout
+
+block content
+	// MAIN CONTENT
+	.container
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h2.text-primary Reset password
+				.modal-body
+					if error
+						.text-error(style='margin-bottom:10px;') #{error}
+					if success
+						.text-error(style='margin-bottom:10px;') #{success}
+						a.btn.btn-primary.btn-lg(href='/') Back
+					else
+						form#loginForm.form.col-md-12.center-block(action="/reset_pass", method='post')
+							.form-group-lg
+								label.sr-only(for='inputPassword') Password:
+								.input-group
+									input#inputPassword.form-control(name='password', type='password', placeholder='password', required='')
+							br
+							.form-group-lg
+								label.sr-only(for='inputRePassword') Validate Password:
+								.input-group
+									input#inputRePassword.form-control(name='repassword', type='password', placeholder='repassword', required='', autofocus='')
+							br
+							input(id='formEmail', name='email', type='hidden', value='')
+							input(id='formKey', name='key', type='hidden', value='')
+							.form-group
+								button#btn_login.btn.btn-primary.btn-lg(type='submit') Confirm
+					
+block scripts

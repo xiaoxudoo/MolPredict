@@ -23,7 +23,11 @@ router.post('/signin', check.checkNotLogin, signController.postSignin);
 router.get('/signout', check.checkLogin, signController.getSignout);
 router.get('/signup', check.checkNotLogin, signController.getSignup);
 router.post('/signup', check.checkNotLogin, signController.postSignup);
-
+router.get('/captcha/:id', signController.captcha);
+router.get('/search_pass', signController.getSearch_pass);
+router.post('/search_pass', signController.postSearch_pass);
+router.get('/reset_pass', signController.getReset_pass);
+router.post('/reset_pass', signController.postReset_pass);
 // moltox
 router.get('/moltox', toxController.index)
 router.get('/moltox/about', toxController.about)
