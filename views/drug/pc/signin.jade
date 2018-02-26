@@ -21,17 +21,16 @@ block content
 							.input-group
 								input#inputPassword.form-control(name='password', type='password', placeholder='password', required='')
 						br
-						//- #codeDiv.form-group-lg
-						//- 	label.sr-only(for='inputPassword') CAPTCHA:
-						//- 	.input-group
-						//- 		input#inputCaptcha.form-control(style='width:100px;', name='captcha', type='text', required='')
-						//- 		| 123
-						//- br
+						#codeDiv.form-group-lg
+							label.sr-only(for='inputPassword') CAPTCHA:
+							.input-group
+								input#inputCaptcha.form-control(style='width:100px;', name='captcha', type='text', required='')
+								img(src='#{code}')
+						br
 						.checkbox
 							label
 								input(type='checkbox', id='remember', value='remember-me')
 								| remember
-						.g-recaptcha(data-sitekey='6LfpkUgUAAAAAJQNmBduk6hRVUSiDG77aenvCOg_')
 						br
 						.form-group
 							button#btn_login.btn.btn-primary.btn-lg(type='submit', style='margin-right:10px;') Login

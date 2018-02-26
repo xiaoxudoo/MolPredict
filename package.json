@@ -11,6 +11,7 @@
     "async": "^1.5.0",
     "bluebird": "^3.1.1",
     "body-parser": "~1.15.1",
+    "ccap": "^0.6.10",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "crypto": "^1.0.1",
