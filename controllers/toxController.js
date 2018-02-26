@@ -1,23 +1,16 @@
-const fs = require('fs');
-const common = require('../utils/common');
+const { pvcount, uniqObjArray } = require('../utils/common');
 const uuid = require("node-uuid");
 const logger = require('../utils/logger');
 const { python_path } = require('../config.js');
 
 // render index page
 exports.index = function (req, res, next) {
-  var file = "pv.data"
-  var pv = 0;
-  pv = fs.readFileSync(file);
-  pv = parseInt(pv) + 1;
-  //写入文件
-  fs.writeFileSync(file, pv);
-  res.render(`drug/pc${req.url}/prediction`, { 'accesscount': pv });
+  res.render(`drug/pc${req.url}/prediction`, { 'accesscount': pvcount(1) });
 }
 
 exports.about = function (req, res, next) {
   const routeName = 'moltox';
-  res.render(`drug/pc${req.url}`);
+  res.render(`drug/pc${req.url}`, { 'accesscount': pvcount(1) });
 }
 
 exports.run_example = function (req, res, next) {
@@ -30,7 +23,7 @@ exports.run_example = function (req, res, next) {
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 1) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job'
-      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
       var cp = require('child_process'),
@@ -45,7 +38,7 @@ exports.run_example = function (req, res, next) {
 
       py.stdout.on('end', function () {
         var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
+        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
       });
 
       py.on('error', function (err) {
@@ -66,7 +59,7 @@ exports.cal_tox = function (req, res, next) {
   req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
   req.checkBody('significant', 'invalid significant').notEmpty().isNumber();
   req.checkBody('runType', 'invalid type').isString();
-  var valiErrors = common.uniqObjArray(req.validationErrors());
+  var valiErrors = uniqObjArray(req.validationErrors());
   var rst = { "flag": 0, "msg": '', 'data': {} };
   if (valiErrors) {
     //表单验证错误
@@ -88,7 +81,7 @@ exports.cal_tox = function (req, res, next) {
     if (!req.session.user) {
       if (isRunning) { // python计算的加锁条件
         rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job！'
-        res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+        res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
       } else {
         const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}.py` : `${python_path}/ca_${routeName}.py`
@@ -110,11 +103,11 @@ exports.cal_tox = function (req, res, next) {
         py.stdout.on('end', function () {
           // when dataString is not avaliable
           if (dataString == '' || dataString == null) {
-            res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+            res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
           }
           //  deal json string
           var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-          res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
+          res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
         });
 
         py.on('error', function (err) {
@@ -179,11 +172,11 @@ exports.query_tox_result = function (req, res, next) {
     console.log(results);
     // when results is not avaliable
     if (results == '' || results == null) {
-      res.render(`drug/pc/moltox/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+      res.render(`drug/pc/moltox/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
     }
     //  deal json string
     var json = JSON.parse(results.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-    res.render(`drug/pc/moltox/absorption.jade`, { 'items': json })
+    res.render(`drug/pc/moltox/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
   })
 }
 

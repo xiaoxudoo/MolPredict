@@ -5,13 +5,14 @@ var optController = require('../controllers/optController');
 var signController = require('../controllers/signController');
 var orderController = require('../controllers/orderController');
 const check = require('../middlewares/check');
+const { pvcount } = require('../utils/common');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
   res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
   res.setHeader("Expires", "0"); // Proxies.
-  res.render('drug/pc/index');
+  res.render('drug/pc/index', {'accesscount': pvcount(1)});
 });
 
 router.get('/home', check.checkLogin, signController.home);

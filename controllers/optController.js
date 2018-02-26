@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { pvcount, uniqObjArray } = require('../utils/common');
 const common = require('../utils/common');
 const uuid = require("node-uuid");
 const logger = require('../utils/logger');
@@ -6,18 +6,12 @@ const { python_path } = require('../config');
 
 // render index page
 exports.index = function (req, res, next) {
-  var file = "pv.data"
-  var pv = 0;
-  pv = fs.readFileSync(file);
-  pv = parseInt(pv) + 1;
-  //写入文件
-  fs.writeFileSync(file, pv);
-  res.render(`drug/pc${req.url}/prediction`, { 'accesscount': pv });
+  res.render(`drug/pc${req.url}/prediction`, { 'accesscount': pvcount(1) });
 }
 
 exports.about = function (req, res, next) {
   const routeName = 'molopt';
-  res.render(`drug/pc${req.url}`);
+  res.render(`drug/pc${req.url}`, { 'accesscount': pvcount(1) });
 }
 
 exports.run_example = function (req, res, next) {
@@ -29,7 +23,7 @@ exports.run_example = function (req, res, next) {
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 2) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
-      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
       const { spawn } = require('child_process');
@@ -43,7 +37,7 @@ exports.run_example = function (req, res, next) {
 
       py.stdout.on('end', function () {
         var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
+        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
       });
 
       py.on('error', function (err) {
@@ -75,7 +69,7 @@ exports.cal_opt_step_one = function (req, res, next) {
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 2) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later Or LOGIN to queue up a job!'
-      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
       const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}.py` : `${python_path}/ca_${routeName}.py`
@@ -92,11 +86,11 @@ exports.cal_opt_step_one = function (req, res, next) {
       py.stdout.on('end', function () {
         // when dataString is not avaliable
         if (dataString == '' || dataString == null) {
-          res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+          res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
         }
         //  deal json string
         var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json })
+        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
       });
 
       py.on('error', function (err) {
@@ -123,7 +117,7 @@ exports.cal_opt_step_two = function (req, res, next) {
     //表单验证错误
     rst.flag = 1
     rst.msg = valiErrors[0].msg
-    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
   }
   // 线程数目
   var exec = require('child_process').exec;
@@ -139,7 +133,7 @@ exports.cal_opt_step_two = function (req, res, next) {
     if (!req.session.user) {
       if (isRunning) { // python计算的加锁条件
         rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job!'
-        res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+        res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
       } else {
         const { spawn } = require('child_process');
@@ -156,12 +150,12 @@ exports.cal_opt_step_two = function (req, res, next) {
         py.stdout.on('end', function () {
           // when dataString is not avaliable
           if (dataString == '' || dataString == null) {
-            res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+            res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
           }
           //  deal json string
           var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
           console.log(JSON.stringify(json))
-          res.render(`drug/pc/${routeName}/optimisation.jade`, { 'items': json })
+          res.render(`drug/pc/${routeName}/optimisation.jade`, { 'items': json, 'accesscount': pvcount(0) })
         });
 
         py.on('error', function (err) {
@@ -227,11 +221,11 @@ exports.query_opt_result = function (req, res, next) {
     console.log(results);
     // when results is not avaliable
     if (results == '' || results == null) {
-      res.render(`drug/pc/molopt/error.jade`, { 'error': 'The input is incorrect. Please have a check.' })
+      res.render(`drug/pc/molopt/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
     }
     //  deal json string
     var json = JSON.parse(results.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-    res.render(`drug/pc/molopt/optimisation.jade`, { 'items': json });
+    res.render(`drug/pc/molopt/optimisation.jade`, { 'items': json, 'accesscount': pvcount(0) });
   })
 }
 

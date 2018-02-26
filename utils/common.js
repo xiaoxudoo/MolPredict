@@ -1,8 +1,20 @@
 /**
- * Created by guotu on 2016-01-26.
+ * Created by guotuo on 2016-01-26.
  */
 
-var moment = require('moment');
+const moment = require('moment');
+const fs = require('fs');
+
+// 计算pv
+exports.pvcount = function (plus = 0) {
+    const file = "pv.data";
+    let pv = 0;
+    pv = fs.readFileSync(file);
+    pv = parseInt(pv) + plus;
+    //写入文件
+    fs.writeFileSync(file, pv);
+    return pv;
+}
 
 //去除对象数组的重复数据
 exports.uniqObjArray = function (ary) {
@@ -92,7 +104,7 @@ exports.getHtml = function (uri, obj, cb) {
 exports.get500 = function (err, cb) {
     var html = "SYSTEM ERROR";
     console.log(JSON.stringify(err));
-    if(JSON.stringify(err).indexOf('ER_DUP_ENTRY')>-1){
+    if (JSON.stringify(err).indexOf('ER_DUP_ENTRY') > -1) {
         html = "duplicate order"
     }
     html += "<input type='hidden' value='" + err + "'>";

@@ -1,6 +1,6 @@
 const crypto = require("crypto");
+const { pvcount } = require('../utils/common');
 const logger = require('../utils/logger');
-
 function getClientIp(req) {
   return req.connection.remoteAddress || req.headers['x-forwarded-for'] || req.headers['x-real-ip'] ||
     req.socket.remoteAddress ||
@@ -8,7 +8,7 @@ function getClientIp(req) {
 };
 
 exports.getSignin = function (req, res, next) {
-  res.render('drug/pc/signin');
+  res.render('drug/pc/signin', {'accesscount': pvcount(0)});
 }
 
 exports.postSignin = function (req, res, next) {
@@ -64,8 +64,7 @@ exports.getSignout = function (req, res, next) {
 }
 
 exports.getSignup = function (req, res, next) {
-
-  res.render('drug/pc/signup');
+  res.render('drug/pc/signup', {'accesscount': pvcount(0)});
 }
 
 exports.postSignup = function (req, res, next) {
@@ -135,7 +134,7 @@ exports.home = function (req, res, next) {
             opt_result.push(element);
           }
         });
-        res.render('drug/pc/home', { 'tox_orders': tox_result, 'opt_orders': opt_result });
+        res.render('drug/pc/home', { 'tox_orders': tox_result, 'opt_orders': opt_result, 'accesscount': pvcount(0) });
       }
     }
   });
