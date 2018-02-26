@@ -230,6 +230,6 @@ exports.query_opt_result = function (req, res, next) {
     //  deal json string
     var json = JSON.parse(results.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
     res.render(`drug/pc/molopt/optimisation.jade`, { 'items': json });
-  }
+  })
 }
 
