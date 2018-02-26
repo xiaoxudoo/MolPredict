@@ -44,7 +44,7 @@ block content
               td #{order.endTime}
               td 
                 if order.status == 9
-                  a(href='/molopt/silicoopt/#{order.id_}') 计算成功
+                  a(href='/molopt/optimize/#{order.id_}') 计算成功
                 else if order.status == 1
                   | 排队中
                 else if order.status == 5
