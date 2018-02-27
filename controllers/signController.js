@@ -33,6 +33,7 @@ exports.captcha = function (req, res, next) {
   const buffer = ary[1];
 
   req.session.verifycode = text;
+  console.log(text);
   res.send(buffer);
 }
 
