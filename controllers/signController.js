@@ -246,7 +246,6 @@ exports.postReset_pass = function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password && req.body.password.trim();
   const repassword = req.body.repassword && req.body.repassword.trim();
-  console.log(email);
   try {
     if (password.length < 6) {
       throw new Error('Password at least 6 characters.')
@@ -264,11 +263,11 @@ exports.postReset_pass = function (req, res, next) {
   } else {
     const token = cache.get(email);
     console.log(token)
-    console.log(cache.get('xiaoxudoo@126.com'))
     if (token != key) {
       req.flash('success', 'The information is incorrect and the password cannot be reset.');
       return res.redirect('back');
     } else {
+      cache.set(email, null);
       let sha1 = crypto.createHash('sha1');
       sha1.update(password);
       const digestPassword = sha1.digest('hex');

@@ -43,7 +43,7 @@ if (window.location.href.indexOf('reset_pass') > -1) {
     const key = getQueryVal('key');
     const email = getQueryVal('email');
     if (key && email) {
-        $('#formEmail').val(key);
-        $('#formKey').val(email);
+        $('#formEmail').val(email);
+        $('#formKey').val(key);
     }
 }
