@@ -1,6 +1,8 @@
 const crypto = require("crypto");
 const nodemailer = require('nodemailer');
 const ccap = require('ccap');
+const LRU = require('lru-cache')
+const uuid = require("node-uuid");
 const { pvcount } = require('../utils/common');
 const logger = require('../utils/logger');
 const { email_config } = require('../config');
@@ -9,6 +11,10 @@ function getClientIp(req) {
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
 };
+const cache = LRU({
+  max: 100,
+  maxAge: 1000 * 60 * 60 * 24
+})
 
 exports.captcha = function (req, res, next) {
   const ary = ccap({
@@ -64,7 +70,6 @@ exports.postSignin = function (req, res, next) {
       next(err);
     } else {
       if (result && result.length > 0) {
-        req.flash('success', 'Logout success.');
         let user = result[0];
         delete user.password;
         req.session.user = user;
@@ -170,8 +175,9 @@ exports.postSearch_pass = function (req, res, next) {
     } else {
       if (result && result.length > 0) {
         // 生产token
-        const token = '123';
         const username = result[0].username
+        const token = uuid.v1();
+        cache.set(email, token);
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
           host: email_config.host,
@@ -216,13 +222,17 @@ exports.postSearch_pass = function (req, res, next) {
 }
 
 exports.getReset_pass = function (req, res, next) {
-  const key = req.body.key && req.body.key.trim();
-  const email = req.body.key && req.body.email.trim();
-  console.log(key, email)
+  const key = req.query.key && req.query.key.trim();
+  const email = req.query.key && req.query.email.trim();
   if (!key || !email) {
     req.flash('success', 'The information is incorrect and the password cannot be reset.');
-    res.render('drug/pc/reset_pass', { 'accesscount': pvcount(0) });
+  } else {
+    const token = cache.get(email);
+    if (token != key) {
+      req.flash('success', 'The information is incorrect and the password cannot be reset.');
+    }
   }
+  res.render('drug/pc/reset_pass', { 'accesscount': pvcount(0) });
 }
 
 exports.postReset_pass = function (req, res, next) {
@@ -245,30 +255,39 @@ exports.postReset_pass = function (req, res, next) {
   if (!key || !email) {
     req.flash('success', 'The information is incorrect and the password cannot be reset.');
     return res.redirect('back');
+  } else {
+    const token = cache.get(email);
+    if (token != key) {
+      req.flash('success', 'The information is incorrect and the password cannot be reset.');
+      return res.redirect('back');
+    } else {
+      let sha1 = crypto.createHash('sha1');
+      sha1.update(password);
+      const digestPassword = sha1.digest('hex');
+
+      User.where({ email }, function (err, result) {
+        if (err) {
+          next(err);
+        } else {
+          if (result && result.length > 0) {
+            let user = result[0];
+            // 更新用户登录信息
+            const params = { id_: result[0].id_, password: digestPassword };
+            User.update(params, function(err, result) {
+              if(err) {
+                next(err);
+              } else {
+                res.redirect("/signin");
+              }
+            });
+          } else {
+            req.flash('error', 'Incorrect email.')
+            return res.redirect('back')
+          }
+        }
+      });
+    }
   }
-  // 验证邮箱是否重复
-  // User.where({ email }, function (err, result) {
-  //   if (err) {
-  //     next(err);
-  //   } else {
-  //     if (result && result.length > 0) {
-  //       req.flash('error', 'The email cannot be duplicated, please change the email.');
-  //       return res.redirect('/signup');
-  //     } else {
-  //       var sha1 = crypto.createHash('sha1');
-  //       sha1.update(user.password);
-  //       user.password = sha1.digest('hex');
-  //       user.registertime = new Date();
-  //       User.insert(user, function (err, result) {
-  //         if (err) {
-  //           next(err);
-  //         } else {
-  //           res.redirect("/signin");
-  //         }
-  //       });
-  //     }
-  //   }
-  // });
 }
 
 exports.home = function (req, res, next) {
