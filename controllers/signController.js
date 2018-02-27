@@ -242,10 +242,11 @@ exports.getReset_pass = function (req, res, next) {
 exports.postReset_pass = function (req, res, next) {
   const User = DB.get("User");
   const key = req.body.key && req.body.key.trim();
-  const email = req.body.email && req.body.email.trim();
+  // const email = req.body.email && req.body.email.trim();
+  const email = req.body.email;
   const password = req.body.password && req.body.password.trim();
   const repassword = req.body.repassword && req.body.repassword.trim();
-  console.log(key, email, password, repassword);
+  console.log(email);
   try {
     if (password.length < 6) {
       throw new Error('Password at least 6 characters.')
@@ -258,14 +259,13 @@ exports.postReset_pass = function (req, res, next) {
     return res.redirect('back')
   }
   if (!key || !email) {
-    console.log('debug01')
     req.flash('success', 'The information is incorrect and the password cannot be reset.');
     return res.redirect('back');
   } else {
     const token = cache.get(email);
     console.log(token)
+    console.log(cache.get('xiaoxudoo@126.com'))
     if (token != key) {
-      console.log('debug02')
       req.flash('success', 'The information is incorrect and the password cannot be reset.');
       return res.redirect('back');
     } else {
