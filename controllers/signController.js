@@ -237,10 +237,11 @@ exports.getReset_pass = function (req, res, next) {
 
 exports.postReset_pass = function (req, res, next) {
   const User = DB.get("User");
-  const key = req.body.key.trim();
-  const email = req.body.email.trim();
-  const password = req.body.password.trim();
-  const repassword = req.body.repassword.trim();
+  const key = req.body.key && req.body.key.trim();
+  const email = req.body.email && req.body.email.trim();
+  const password = req.body.password && req.body.password.trim();
+  const repassword = req.body.repassword && req.body.repassword.trim();
+  console.log(key, email, password, repassword);
   try {
     if (password.length < 6) {
       throw new Error('Password at least 6 characters.')
@@ -253,18 +254,21 @@ exports.postReset_pass = function (req, res, next) {
     return res.redirect('back')
   }
   if (!key || !email) {
+    console.log('debug01')
     req.flash('success', 'The information is incorrect and the password cannot be reset.');
     return res.redirect('back');
   } else {
     const token = cache.get(email);
+    console.log(token)
     if (token != key) {
+      console.log('debug02')
       req.flash('success', 'The information is incorrect and the password cannot be reset.');
       return res.redirect('back');
     } else {
       let sha1 = crypto.createHash('sha1');
       sha1.update(password);
       const digestPassword = sha1.digest('hex');
-
+      console.log('debug03')
       User.where({ email }, function (err, result) {
         if (err) {
           next(err);
