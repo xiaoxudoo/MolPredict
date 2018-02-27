@@ -13,7 +13,7 @@ function getClientIp(req) {
 };
 const cache = LRU({
   max: 100,
-  maxAge: 1000 * 60 * 60 * 24
+  maxAge: 1000 * 60 * 60
 })
 
 exports.captcha = function (req, res, next) {
@@ -178,6 +178,7 @@ exports.postSearch_pass = function (req, res, next) {
         const username = result[0].username
         const token = uuid.v1();
         cache.set(email, token);
+        console.log(cache.get(email))
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
           host: email_config.host,
@@ -228,6 +229,7 @@ exports.getReset_pass = function (req, res, next) {
     req.flash('success', 'The information is incorrect and the password cannot be reset.');
   } else {
     const token = cache.get(email);
+    console.log(token)
     if (token != key) {
       req.flash('success', 'The information is incorrect and the password cannot be reset.');
     }
