@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const nodemailer = require('nodemailer');
 const ccap = require('ccap');
 const { pvcount } = require('../utils/common');
 const logger = require('../utils/logger');
@@ -168,22 +169,21 @@ exports.postSearch_pass = function (req, res, next) {
       next(err);
     } else {
       if (result && result.length > 0) {
-        // 发邮件
-        const nodemailer = require('nodemailer');
         // 生产token
         const token = '123';
+        const username = result[0].username
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
           host: email_config.host,
           port: email_config.port,
-          // secure: true, // true for 465, false for other ports
+          secure: email_config.secure,
           auth: {
             user: email_config.user,
             pass: email_config.pwd
           }
         });
 
-        const html = `hi：<br>
+        const html = `hi：${username}<br>
         We received your request to reset the password in Xundrug. Please click the link below to reset the password within 24 hours:<br>
         <a href='http://xundrug.cn/reset_pass?key=${token}&email=${email}'>RESET PASSWORD</a><br>
         If you do not fill in the registration information in Xundurg, it means that someone has abused your email address. <br>
