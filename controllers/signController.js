@@ -206,14 +206,16 @@ exports.postSearch_pass = function (req, res, next) {
         };
 
         // send mail with defined transport object
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log('Message %s sent: %s', info.messageId, info.response);
-          req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
-          return res.redirect('back');
-        });
+        // transporter.sendMail(mailOptions, (error, info) => {
+        //   if (error) {
+        //     return console.log(error);
+        //   }
+        //   console.log('Message %s sent: %s', info.messageId, info.response);
+        //   req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
+        //   return res.redirect('back');
+        // });
+        req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
+        return res.redirect('back');
       } else {
         req.flash('error', 'The email is not exist!');
         return res.redirect('back');
