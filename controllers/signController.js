@@ -284,6 +284,7 @@ exports.postReset_pass = function (req, res, next) {
               if(err) {
                 next(err);
               } else {
+                req.session.user = null;
                 res.redirect("/signin");
               }
             });
