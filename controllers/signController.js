@@ -238,8 +238,7 @@ exports.getReset_pass = function (req, res, next) {
 exports.postReset_pass = function (req, res, next) {
   const User = DB.get("User");
   const key = req.body.key && req.body.key.trim();
-  // const email = req.body.email && req.body.email.trim();
-  const email = req.body.email;
+  const email = req.body.email && req.body.email.trim();
   const password = req.body.password && req.body.password.trim();
   const repassword = req.body.repassword && req.body.repassword.trim();
   try {
