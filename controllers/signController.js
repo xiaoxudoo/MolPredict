@@ -178,7 +178,6 @@ exports.postSearch_pass = function (req, res, next) {
         const username = result[0].username
         const token = uuid.v1();
         cache.set(email, token);
-        console.log(cache.get(email))
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
           host: email_config.host,
@@ -206,16 +205,14 @@ exports.postSearch_pass = function (req, res, next) {
         };
 
         // send mail with defined transport object
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //   if (error) {
-        //     return console.log(error);
-        //   }
-        //   console.log('Message %s sent: %s', info.messageId, info.response);
-        //   req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
-        //   return res.redirect('back');
-        // });
-        req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
-        return res.redirect('back');
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.log(error);
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response);
+          req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
+          return res.redirect('back');
+        });
       } else {
         req.flash('error', 'The email is not exist!');
         return res.redirect('back');
@@ -231,7 +228,6 @@ exports.getReset_pass = function (req, res, next) {
     req.flash('success', 'The information is incorrect and the password cannot be reset.');
   } else {
     const token = cache.get(email);
-    console.log(token)
     if (token != key) {
       req.flash('success', 'The information is incorrect and the password cannot be reset.');
     }
@@ -262,7 +258,6 @@ exports.postReset_pass = function (req, res, next) {
     return res.redirect('back');
   } else {
     const token = cache.get(email);
-    console.log(token)
     if (token != key) {
       req.flash('success', 'The information is incorrect and the password cannot be reset.');
       return res.redirect('back');
@@ -271,7 +266,6 @@ exports.postReset_pass = function (req, res, next) {
       let sha1 = crypto.createHash('sha1');
       sha1.update(password);
       const digestPassword = sha1.digest('hex');
-      console.log('debug03')
       User.where({ email }, function (err, result) {
         if (err) {
           next(err);
