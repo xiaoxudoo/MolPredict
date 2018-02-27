@@ -178,6 +178,7 @@ exports.postSearch_pass = function (req, res, next) {
         const username = result[0].username
         const token = uuid.v1();
         cache.set(email, token);
+        console.log(token)
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
           host: email_config.host,
@@ -213,6 +214,9 @@ exports.postSearch_pass = function (req, res, next) {
           req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
           return res.redirect('back');
         });
+
+        // req.flash('success', 'We have sent an email to your email address. Please click the link within 24 hours to reset the password.');
+        // return res.redirect('back');
       } else {
         req.flash('error', 'The email is not exist!');
         return res.redirect('back');
@@ -225,14 +229,17 @@ exports.getReset_pass = function (req, res, next) {
   const key = req.query.key && req.query.key.trim();
   const email = req.query.key && req.query.email.trim();
   if (!key || !email) {
-    req.flash('success', 'The information is incorrect and the password cannot be reset.');
+    res.render('drug/pc/reset_pass', { 'accesscount': pvcount(0), 'success': 'The information is incorrect and the password cannot be reset.' });
+    return false;
   } else {
     const token = cache.get(email);
     if (token != key) {
-      req.flash('success', 'The information is incorrect and the password cannot be reset.');
+      res.render('drug/pc/reset_pass', { 'accesscount': pvcount(0), 'success': 'The information is incorrect and the password cannot be reset.' });
+      return false;
+    } else {
+      res.render('drug/pc/reset_pass', { 'accesscount': pvcount(0) });
     }
   }
-  res.render('drug/pc/reset_pass', { 'accesscount': pvcount(0) });
 }
 
 exports.postReset_pass = function (req, res, next) {
