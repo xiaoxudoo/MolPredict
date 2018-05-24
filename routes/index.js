@@ -48,7 +48,7 @@ router.post('/molopt/optimize', optController.cal_opt_step_two);
 router.get('/molopt/optimize/:id', optController.query_opt_result);
 
 // sample
-router.get('/sample', optController.index)
-router.get('/sample/about', optController.about)
+router.get('/sample', sampleController.index)
+router.get('/sample/about', sampleController.about)
 
 module.exports = router;
