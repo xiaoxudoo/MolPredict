@@ -24,3 +24,4 @@ public/static2/**
 !pm2.service.config.json
 !package.json
 !README.md
+!config.js

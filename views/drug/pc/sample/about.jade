@@ -1,0 +1,48 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 Welcome to In silico Drug Safety Analysis System
+    .hero-unit
+      h3 Purpose of eMolTox
+      h2
+      p eMolTox is a webserver for the prediction of potential toxicity a given molecule is likely to have. eMolTox implements state-of-the-art machine learning methods, predicts and displays a wealthy information of molecular potential toxic properties and similar known toxic compound information for safety analysis in drug development. 
+
+    .hero-unit
+      h3 Scientific Background
+      h2     
+      h4  Data Driven Models
+      p Various types of safety data are generated in vitro and in vivo (in animals and in humans), and these data can be used to predict toxicity potential of a drug candidate at an early stage. We collect different types of toxicology data from public databases and literature, including essential off-target functional assays, cytotoxicity tests, mutagenicity tests, CYP450 inhibition assays, acute oral toxicity assays, transporter assays and et al. 174 data sets were extracted in total. Mondrian conformal prediction framework and RandormForest are used for building  prediction models. Training details and performances of  all data driven models are listed as follows:
+      li: a(href='/web_mondrial2.htm') Conformal Predictors 
+
+      h4 Toxic substructure analysis 
+      p Structural alerts (also known as toxicophors/toxic fragments) are chemical substructures that indicate or associate to specific toxic endpoints. Structural alerts are widely accepted in chemical toxicology and regulatory decision. We collect all public available structural alerts and analyze whether a query compound contain specific toxic substructure. 17 types of structural alerts are included in the webserver:
+      li: a(href='/web_alert.htm') Structural Alerts List
+
+
+
+    .hero-unit
+      h3 Data Download 
+      h2     
+      p All the datasets used in building conformal predictors are here:
+      li: a(href='/moltox_train.tar.gz') train_data
+
+    .hero-unit
+      h3 Citing eMolTox 
+      h2     
+      p If this service is useful to you, please cite:
+      li: a(href='https://doi.org/10.1093/bioinformatics/bty135') Changge Ji, Fredrik Svensson, Azedine Zoufir, Andreas Bender; eMolTox: prediction of molecular toxicity with confidence, Bioinformatics, In Press
+
+    .hero-unit
+      h3 Contact
+      h2     
+      p If you have any question about eMolTox, please contact:
+      p Changge Ji 
+      p Chicago.ji@gmail.com
+
+
+
+block scripts
+  

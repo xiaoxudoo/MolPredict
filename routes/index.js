@@ -28,6 +28,10 @@ router.get('/search_pass', signController.getSearch_pass);
 router.post('/search_pass', signController.postSearch_pass);
 router.get('/reset_pass', signController.getReset_pass);
 router.post('/reset_pass', signController.postReset_pass);
+
+// order
+router.get('/delete/:id', orderController.deleteOrder);
+
 // moltox
 router.get('/moltox', toxController.index)
 router.get('/moltox/about', toxController.about)
@@ -43,7 +47,8 @@ router.post('/molopt/silicoopt', optController.cal_opt_step_one);
 router.post('/molopt/optimize', optController.cal_opt_step_two);
 router.get('/molopt/optimize/:id', optController.query_opt_result);
 
-// order
-router.get('/delete/:id', orderController.deleteOrder);
+// sample
+router.get('/sample', optController.index)
+router.get('/sample/about', optController.about)
 
 module.exports = router;
