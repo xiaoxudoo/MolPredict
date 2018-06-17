@@ -15,3 +15,15 @@ create user 'test'@'%' identified by '123456';
 ### molopt
 frag_name: radio
 desired_property: checkbox
+
+### config.js
+config.js 处理一般的配置项，例如端口，数据库连接
+
+### 开发范式
+开发的时候 
+
+在controllers目录下新建一个controller
+
+在routes/index.js下新建路由规则对应上一个controller
+
+在views/drug/pc 下新建一个文件夹，将molopt或者moltox拷贝一份进去， 编写相关的jade模板。

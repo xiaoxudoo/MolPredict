@@ -29,6 +29,10 @@ router.get('/search_pass', signController.getSearch_pass);
 router.post('/search_pass', signController.postSearch_pass);
 router.get('/reset_pass', signController.getReset_pass);
 router.post('/reset_pass', signController.postReset_pass);
+
+// order
+router.get('/delete/:id', orderController.deleteOrder);
+
 // moltox
 router.get('/moltox', toxController.index)
 router.get('/moltox/about', toxController.about)
@@ -57,5 +61,8 @@ router.get('/molpka/optimize/:id', pkaController.query_opt_result);
 
 // order
 router.get('/delete/:id', orderController.deleteOrder);
+// sample
+router.get('/sample', sampleController.index)
+router.get('/sample/about', sampleController.about)
 
 module.exports = router;
