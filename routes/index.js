@@ -5,6 +5,8 @@ var optController = require('../controllers/optController');
 var pkaController = require('../controllers/pkaController');
 var signController = require('../controllers/signController');
 var orderController = require('../controllers/orderController');
+var sampleController = require('../controllers/sampleController');
+
 const check = require('../middlewares/check');
 const { pvcount } = require('../utils/common');
 

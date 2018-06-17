@@ -26,6 +26,19 @@ $('#myform2').submit(function (evt) {
 
 });
 
+$('#myform3').submit(function (evt) {
+
+    var val = $(this).find('input[name="rsmi"]:checked').val();
+    if (!val) {
+        alert("please select an model");
+        return false;
+    } else {
+        addprogress();
+        return true;
+    }
+
+});
+
 function addprogress() {
     $('.cal-mask').show();
     var wave = (function () {
