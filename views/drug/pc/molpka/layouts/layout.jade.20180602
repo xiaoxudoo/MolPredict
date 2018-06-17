@@ -73,10 +73,6 @@ html.no-js
                 a(href='/molopt/about')
                   i.icon-white.icon-book
                   |  About
-              li
-                a(href='/molopt/tutorial')
-                  i.icon-white.icon-book
-                  |  Tutorial 
           .text-right(style="float:right;")
             a.brand(href='/') Xundrug&nbsp; |
             if user 

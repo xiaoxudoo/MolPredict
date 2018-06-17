@@ -72,7 +72,7 @@ exports.cal_opt_step_one = function (req, res, next) {
   const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   exec(cmdStr, function (err, stdout, stderr) {
     if (stdout && stdout > 2) {
-      rst.msg = 'The server is busy at the moment. Please try again two minitues later '
+      rst.msg = 'The server is busy at the moment. Please try again two minitues later Or LOGIN to queue up a job!'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
@@ -113,7 +113,7 @@ exports.cal_opt_step_two = function (req, res, next) {
   const routeName = 'molopt';
   const Order = DB.get("Order");
   // req.checkBody('molecular', 'molecular').notEmpty().isString();
-  req.checkBody('rsmi', 'Sorry, you did not select any substructure. Please go back and have a check.').notEmpty().isString();
+  req.checkBody('rsmi', 'rsmi').notEmpty().isString();
   // req.checkBody('mode', 'mode').notEmpty().isString();
   var valiErrors = common.uniqObjArray(req.validationErrors());
   var rst = { "flag": 0, "msg": '', 'data': {} };
@@ -136,7 +136,7 @@ exports.cal_opt_step_two = function (req, res, next) {
     // 如果未登录
     if (!req.session.user) {
       if (isRunning) { // python计算的加锁条件
-        rst.msg = 'The server is busy at the moment. Please try again two minitues later. '
+        rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job!'
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
       } else {

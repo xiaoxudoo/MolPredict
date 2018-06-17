@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var toxController = require('../controllers/toxController');
 var optController = require('../controllers/optController');
+var pkaController = require('../controllers/pkaController');
 var signController = require('../controllers/signController');
 var orderController = require('../controllers/orderController');
 const check = require('../middlewares/check');
@@ -38,10 +39,21 @@ router.get('/moltox/silicotox/:id', toxController.query_tox_result);
 // molopt
 router.get('/molopt', optController.index)
 router.get('/molopt/about', optController.about)
+router.get('/molopt/tutorial', optController.tutorial)
 router.get('/molopt/run_example', optController.run_example)
 router.post('/molopt/silicoopt', optController.cal_opt_step_one);
 router.post('/molopt/optimize', optController.cal_opt_step_two);
 router.get('/molopt/optimize/:id', optController.query_opt_result);
+
+// molpka
+router.get('/molpka', pkaController.index)
+router.get('/molpka/about', pkaController.about)
+router.get('/molpka/tutorial', pkaController.tutorial)
+router.get('/molpka/run_example', pkaController.run_example)
+router.post('/molpka/silicoopt', pkaController.cal_opt_step_one);
+router.post('/molpka/optimize', pkaController.cal_opt_step_two);
+router.get('/molpka/optimize/:id', pkaController.query_opt_result);
+
 
 // order
 router.get('/delete/:id', orderController.deleteOrder);

@@ -4,7 +4,7 @@ block content
   // MAIN CONTENT
   .container
     .hero-unit
-      h2 Please select substructure you want to optimize and click 'Submit' 
+      h2 Select Substructure you want to optimize 
     br
     br
     .row.fluid
@@ -58,39 +58,43 @@ block content
                               #{bvalue}
                               br
                               input(type='radio', name="rsmi" value="#{subitem['frag_name']}")
-                          else if bvalue.toString().indexOf("frag_") > -1
-                            td
-                              a(href="#{bvalue}") 
                           else 
                             td #{bvalue}
-              .btn-group
-                  button.btn.btn-primary.span3(type='submit', style='padding: 8px 20px')
-                      i.icon-play.icon-white
-                      b Submit
-               // .span4
-               //   input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
+              //- checkbox
+              .row-fluid
+                .span4
+                  input(type='checkbox', name='mode', value='1', checked='checked')
+                  | nihao1
+                .span4
+                  input(type='checkbox', name='mode', value='2')
+                  | nihao2
+                .span4  
+                  input(type='checkbox', name='mode', value='3')
+                  | nihao3
+                .span4
+                  input(type='checkbox', name='mode', value='4') 
+                  | nihao4
+                .span4
+                  input(type='checkbox', name='mode', value='5')
+                  | nihao5
+                .span4  
+                  input(type='checkbox', name='mode', value='6')
+                  | nihao6
+              .row-fluid
+                .span2
+                  input.btn(type='submit', value='Next')
+                .span2
+                  input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
     br
     br
     hr
-  // 悬浮球
-  div.cal-mask(style="display:none;")
-    #wave.wave
-  style.
-    .wave{position:relative;width:200px;height:200px;overflow:hidden;border-radius:50%;background:rgba(255,203,103,.6);text-align:center;display:table-cell;vertical-align:middle;}
-    .wave canvas{position:absolute;left:0;top:0;z-index:1;}
 
 block scripts
-  script.
-    $(function ()
-    {
-    $("#pop1").popover({
-    trigger:'hover',
-    html: true,
-    animation: true
-    });
-    $("#pop3").popover({
-    trigger:'hover',
-    html: true,
-    animation: true
-    });
-    });
+    script.
+      $(function ()
+      {
+      $("#pop1").popover({
+      html: true,
+      animation: true
+      });
+      });

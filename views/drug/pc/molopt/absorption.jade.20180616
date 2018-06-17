@@ -72,25 +72,13 @@ block content
     br
     br
     hr
-  // 悬浮球
-  div.cal-mask(style="display:none;")
-    #wave.wave
-  style.
-    .wave{position:relative;width:200px;height:200px;overflow:hidden;border-radius:50%;background:rgba(255,203,103,.6);text-align:center;display:table-cell;vertical-align:middle;}
-    .wave canvas{position:absolute;left:0;top:0;z-index:1;}
 
 block scripts
-  script.
-    $(function ()
-    {
-    $("#pop1").popover({
-    trigger:'hover',
-    html: true,
-    animation: true
-    });
-    $("#pop3").popover({
-    trigger:'hover',
-    html: true,
-    animation: true
-    });
-    });
+    script.
+      $(function ()
+      {
+      $("#pop1").popover({
+      html: true,
+      animation: true
+      });
+      });
