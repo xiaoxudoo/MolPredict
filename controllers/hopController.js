@@ -75,7 +75,7 @@ exports.cal_opt_step_one = function (req, res, next) {
   let molecularFile = req.files.molecularFile;
   // Use the mv() method to place the file somewhere on your server
   const filePath = `${__dirname}/../public/upload/${molecularFile.name}`
-  sampleFile.mv(filePath, function(err) {
+  molecularFile.mv(filePath, function(err) {
     if (err) return res.status(500).send(err);
     const { exec } = require('child_process');
     const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
