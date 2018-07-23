@@ -58,7 +58,6 @@ exports.run_example = function (req, res, next) {
 
 exports.cal_opt_step_one = function (req, res, next) {
   const routeName = 'molhop';
-  req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
   req.checkBody('runType', 'invalid type').isString();
   let valiErrors = common.uniqObjArray(req.validationErrors());
   const rst = { "flag": 0, "msg": '', 'data': {} };
@@ -68,44 +67,55 @@ exports.cal_opt_step_one = function (req, res, next) {
     rst.msg = valiErrors[0].msg
     res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
   }
-  const { exec } = require('child_process');
-  const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
-  exec(cmdStr, function (err, stdout, stderr) {
-    if (stdout && stdout > 2) {
-      rst.msg = 'The server is busy at the moment. Please try again two minitues later '
-      res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
-      return false;
-    } else {
-      const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}.py` : `${python_path}/ca_${routeName}.py`
-      const { spawn } = require('child_process');
-      py = spawn('python', [calTypePy]);
-      const data = [];
-      let dataString = '';
-      rst.data.input = req.body.molecular
-      data.push(req.body.molecular)
-      py.stdout.on('data', function (data) {
-        dataString += data.toString();
-      });
+  if (!req.molecular && !req.files) {
+    rst.flag = 1
+    rst.msg = 'No molecule provided Or No files were uploaded.';
+    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+  }
+  let molecularFile = req.files.molecularFile;
+  // Use the mv() method to place the file somewhere on your server
+  const filePath = `${__dirname}/../public/upload/${molecularFile.name}`
+  sampleFile.mv(filePath, function(err) {
+    if (err) return res.status(500).send(err);
+    const { exec } = require('child_process');
+    const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
+    exec(cmdStr, function (err, stdout, stderr) {
+      if (stdout && stdout > 2) {
+        rst.msg = 'The server is busy at the moment. Please try again two minitues later '
+        res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
+        return false;
+      } else {
+        const calTypePy = `${python_path}/ca_all_molhop.py`;
+        const { spawn } = require('child_process');
+        py = spawn('python', [calTypePy]);
+        const data = [];
+        const mol = req.body.molecular || '';
+        data.push(mol, filePath);
+        let dataString = '';
+        py.stdout.on('data', function (data) {
+          dataString += data.toString();
+        });
 
-      py.stdout.on('end', function () {
-        // when dataString is not avaliable
-        if (dataString == '' || dataString == null) {
-          res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
-        }
-        //  deal json string
-        var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-        res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
-      });
+        py.stdout.on('end', function () {
+          // when dataString is not avaliable
+          if (dataString == '' || dataString == null) {
+            res.render(`drug/pc/${routeName}/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
+          }
+          //  deal json string
+          var json = JSON.parse(dataString.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
+          res.render(`drug/pc/${routeName}/absorption.jade`, { 'items': json, 'accesscount': pvcount(0) })
+        });
 
-      py.on('error', function (err) {
-        console.log(new Date());
-        console.log('开启失败', err);
-        process.exit();
-      });
+        py.on('error', function (err) {
+          console.log(new Date());
+          console.log('开启失败', err);
+          process.exit();
+        });
 
-      py.stdin.write(JSON.stringify(data));
-      py.stdin.end();
-    }
+        py.stdin.write(JSON.stringify(data));
+        py.stdin.end();
+      }
+    });
   });
 }
 
@@ -145,7 +155,6 @@ exports.cal_opt_step_two = function (req, res, next) {
         const data = [];
         let dataString = '';
 
-        // rst.data.input = req.body.molecular
         data.push(req.body.rsmi, req.body.mode)
         py.stdout.on('data', function (data) {
           dataString += data.toString();

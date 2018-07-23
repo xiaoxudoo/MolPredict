@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content=普瑞赛思生物医药科技（北京）有限公司是一家专注于计算机辅助药物设计（CADD）的专业服务商。我们致力于提供最专业的计算药物解决方案，主要包括：虚拟筛选、分子对接、分子动力学模拟、化合物库构建。><meta name=keywords content="CADD,virtual screen,molecular dynamics,molecular docking,protein docking,reverse docking,虚拟筛选,分子动力学模拟,分子对接,蛋白质对接,计算机辅助药物,反向虚拟筛选,普瑞赛思,普瑞赛思生物医药,普瑞赛思生物医药科技,普瑞赛思生物医药科技有限公司,普瑞赛思生物医药科技（北京）有限公司"><link rel="shortcut icon" href=./static/img/precise.ico><title>普瑞塞思生物技术</title><link rel=stylesheet href=./static/css/bootstrap.min.css><!--[if lt IE 9]>
+          <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="http://cdn.bootcss .com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]--><script>// 给html根节点加上data-ext属性标识是否可以使用webp
+            function addRootTag(extname) {
+                document.documentElement.setAttribute('data-ext', extname);
+            }
+
+            // 判断是否有webps=A这个cookie
+            if (!/(^|;\s?)webps=A/.test(document.cookie)) {
+                var elem = document.createElement('canvas');
+                if (!!(elem.getContext && elem.getContext('2d'))) {
+                    if( elem.toDataURL('image/webp').indexOf('data:image/webp') === 0 ) {
+                        // html根节点添加属性，并且埋入cookie
+                        addRootTag('webp');
+                        document.cookie = "webps=A; max-age=31536000; domain=mi.com";
+                    } else {
+                        addRootTag('jpeg');
+                    }
+                } else {
+                    var image = new Image();
+
+                    // 图片加载完成时候的操作
+                    image.onload = function() {
+
+                        // 图片加载成功且宽度为1，那么就代表支持webp了，因为这张base64图是webp格式。如果不支持会触发image.error方法
+                        if (image.width == 1) {
+
+                            addRootTag('webp');
+                            document.cookie = "webps=A; max-age=31536000; domain=mi.com";
+                        } else {
+                            addRootTag('jpeg');
+                        }
+                    };
+
+                    // 一张支持alpha透明度的webp的图片，使用base64编码
+                    image.src = 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==';
+                }
+            } else {
+                addRootTag('webp');
+            }</script><script src=./static/js/jquery.min.js></script><script src=./static/js/bootstrap.min.js></script><link href=./static/css/app.56f8f1066f271f7dd2e5188d83714c48.css rel=stylesheet></head><body><!--[if lt IE 9]>
+        <p class="browsehappy">
+        你正在使用一个<strong>过时</strong>的浏览器。请<a class="link" href="http://browsehappy.com" target="_blank">升级您的浏览器</a>。</p>
+        </p>
+        <![endif]--><div id=app></div><script type=text/javascript src=./static/js/manifest.77d7aff163da097325a3.js></script><script type=text/javascript src=./static/js/vendor.8b149420d8b8f650e4db.js></script><script type=text/javascript src=./static/js/app.2c293eab6179f7e8d8b5.js></script></body></html>

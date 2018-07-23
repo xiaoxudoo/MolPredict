@@ -14,7 +14,9 @@ $('#myform2 button').click(function (evt) {
 $('#myform2').submit(function (evt) {
 
     var val = $(this).find('#myinput').val();
-    if (!val) {
+    var val2 = $(this).find('#myinput2').val();
+
+    if (!val && !val2) {
         $("#errormsg").html("The molecules cannot be empty.");
         window.scrollTo(0,0);
         return false;

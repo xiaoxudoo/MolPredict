@@ -1,5 +1,6 @@
 const express = require('express');
 const expressValidator = require('express-validator');
+const fileUpload = require('express-fileupload');
 const session = require('express-session')
 const flash = require('connect-flash')
 const moment = require("moment");
@@ -111,6 +112,9 @@ app.use(expressValidator({
 		}
 	}
 }));  // validator for express
+app.use(fileUpload({
+	limits: { fileSize: 50 * 1024 },
+}));	 // file upload
 
 
 // 添加模板必需的三个变量
