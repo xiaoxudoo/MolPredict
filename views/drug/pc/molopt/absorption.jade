@@ -4,7 +4,7 @@ block content
   // MAIN CONTENT
   .container
     .hero-unit
-      h2 Please select substructure you want to optimize and click 'Submit' 
+      h2 Please select substructure you want to optimize, click 'Submit' and wait for two minutes. 
     br
     br
     .row.fluid
@@ -37,7 +37,7 @@ block content
       .span8
         for item in items
           if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
-            form#form3(enctype='application/x-www-form-urlencoded', action='/molopt/optimize', method='POST')
+            form#myform3(enctype='application/x-www-form-urlencoded', action='/molopt/optimize', method='POST')
               //- input(id='molecular', type='hidden', name="molecular" value="default")
               .well  
                 h4 #{item.Table_Name}:

@@ -10,16 +10,16 @@ exports.index = function (req, res, next) {
 }
 
 exports.about = function (req, res, next) {
-  const routeName = 'molpka';
+  const routeName = 'molhop';
   res.render(`drug/pc${req.url}`, { 'accesscount': pvcount(1) });
 }
 exports.tutorial = function (req, res, next) {
-  const routeName = 'molpka';
+  const routeName = 'molhop';
   res.render(`drug/pc${req.url}`, { 'accesscount': pvcount(1) });
 }
 
 exports.run_example = function (req, res, next) {
-  const routeName = 'molpka';
+  const routeName = 'molhop';
   const rst = { "flag": 0, "msg": '', 'data': {} };
   // 线程数目
   const { exec } = require('child_process');
@@ -57,7 +57,7 @@ exports.run_example = function (req, res, next) {
 }
 
 exports.cal_opt_step_one = function (req, res, next) {
-  const routeName = 'molpka';
+  const routeName = 'molhop';
   req.checkBody('molecular', 'Empty molecular').notEmpty().isString();
   req.checkBody('runType', 'invalid type').isString();
   let valiErrors = common.uniqObjArray(req.validationErrors());
@@ -110,7 +110,7 @@ exports.cal_opt_step_one = function (req, res, next) {
 }
 
 exports.cal_opt_step_two = function (req, res, next) {
-  const routeName = 'molpka';
+  const routeName = 'molhop';
   const Order = DB.get("Order");
   // req.checkBody('molecular', 'molecular').notEmpty().isString();
   req.checkBody('rsmi', 'Sorry, you did not select any substructure. Please go back and have a check.').notEmpty().isString();
@@ -141,7 +141,7 @@ exports.cal_opt_step_two = function (req, res, next) {
         return false;
       } else {
         const { spawn } = require('child_process');
-        py = spawn('python', [`${python_path}/ca_replace_molpka.py`]);
+        py = spawn('python', [`${python_path}/ca_replace_molhop.py`]);
         const data = [];
         let dataString = '';
 
@@ -225,11 +225,11 @@ exports.query_opt_result = function (req, res, next) {
     console.log(results);
     // when results is not avaliable
     if (results == '' || results == null) {
-      res.render(`drug/pc/molpka/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
+      res.render(`drug/pc/molhop/error.jade`, { 'error': 'The input is incorrect. Please have a check.', 'accesscount': pvcount(0) })
     }
     //  deal json string
     var json = JSON.parse(results.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g, ']'));
-    res.render(`drug/pc/molpka/optimisation.jade`, { 'items': json, 'accesscount': pvcount(0) });
+    res.render(`drug/pc/molhop/optimisation.jade`, { 'items': json, 'accesscount': pvcount(0) });
   })
 }
 

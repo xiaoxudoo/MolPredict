@@ -4,7 +4,8 @@
   "cwd": "./",
   "watch": [
     "./controllers",
-    "./routes"
+    "./routes",
+    "./views"
   ],
   "ignore_watch": [
     "node_modules",

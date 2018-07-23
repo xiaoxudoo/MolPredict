@@ -11,7 +11,7 @@ block content
           img.example-image(src='/pkcsm/static/img/optmol.png', alt='image-1')
         br
         br
-        form#myform1(enctype='multipart/form-data', action='/molpka/run_example', method='GET')
+        form#myform1(enctype='multipart/form-data', action='/molhop/run_example', method='GET')
           button.btn.btn-inverse(type='submit', style='margin: 0 auto;') Run example
         .alert.alert-block
           button.close(type='button', data-dismiss='alert') ×
@@ -21,7 +21,7 @@ block content
             | No molecule information will be retained on the system.
       // ********************************************************************************************************************************
       .span7.offset1
-        form#myform2(enctype='application/x-www-form-urlencoded', action='/molpka/silicoopt', method='POST')
+        form#myform2(enctype='application/x-www-form-urlencoded', action='/molhop/silicoopt', method='POST')
           h3
             | Step 1: Please provide a molecule (SMILES format preferred) 
             br

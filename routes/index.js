@@ -3,6 +3,7 @@ var router = express.Router();
 var toxController = require('../controllers/toxController');
 var optController = require('../controllers/optController');
 var pkaController = require('../controllers/pkaController');
+var hopController = require('../controllers/hopController')
 var signController = require('../controllers/signController');
 var orderController = require('../controllers/orderController');
 var sampleController = require('../controllers/sampleController');
@@ -60,6 +61,14 @@ router.post('/molpka/silicoopt', pkaController.cal_opt_step_one);
 router.post('/molpka/optimize', pkaController.cal_opt_step_two);
 router.get('/molpka/optimize/:id', pkaController.query_opt_result);
 
+// molhop
+router.get('/molhop', hopController.index)
+router.get('/molhop/about', hopController.about)
+router.get('/molhop/tutorial', hopController.tutorial)
+router.get('/molhop/run_example', hopController.run_example)
+router.post('/molhop/silicoopt', hopController.cal_opt_step_one);
+router.post('/molhop/optimize', hopController.cal_opt_step_two);
+router.get('/molhop/optimize/:id', hopController.query_opt_result);
 
 // order
 router.get('/delete/:id', orderController.deleteOrder);
