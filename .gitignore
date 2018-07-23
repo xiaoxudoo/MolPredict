@@ -15,6 +15,8 @@ public/static
 public/static/**
 public/static2
 public/static2/**
+public/upload
+public/upload/**
 !routes
 !routes/**
 !utils
