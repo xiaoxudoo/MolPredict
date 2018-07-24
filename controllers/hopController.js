@@ -68,7 +68,7 @@ exports.cal_opt_step_one = function (req, res, next) {
     res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg });
     return false;
   }
-  if (!req.molecular && !req.files) {
+  if (!req.body.molecular && !req.files) {
     rst.flag = 1
     rst.msg = 'No molecule provided Or No files were uploaded.';
     res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg });
@@ -79,8 +79,8 @@ exports.cal_opt_step_one = function (req, res, next) {
   const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   const mol = req.body.molecular || '';
   const calTypePy = `${python_path}/ca_all_molhop.py`;
-  if ( req.files ) {
-    let molecularFile = req.files.molecularFile;
+  if ( req.files && req.files.molecularFile ) {
+    const molecularFile = req.files.molecularFile;
     // Use the mv() method to place the file somewhere on your server
     const filePath = `${__dirname}/../public/upload/${molecularFile.name}`;
     molecularFile.mv(filePath, function(err) {
@@ -122,7 +122,7 @@ exports.cal_opt_step_one = function (req, res, next) {
         });
 
         py.stdin.write(JSON.stringify(data));
-        
+
         py.stdin.end();
       }
     });
