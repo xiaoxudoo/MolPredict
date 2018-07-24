@@ -65,37 +65,46 @@ exports.cal_opt_step_one = function (req, res, next) {
     //表单验证错误
     rst.flag = 1
     rst.msg = valiErrors[0].msg
-    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg });
+    return false;
   }
   if (!req.molecular && !req.files) {
     rst.flag = 1
     rst.msg = 'No molecule provided Or No files were uploaded.';
-    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg })
+    res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg });
+    return false;
   }
-  let molecularFile = req.files.molecularFile;
-  // Use the mv() method to place the file somewhere on your server
-  const filePath = `${__dirname}/../public/upload/${molecularFile.name}`
-  molecularFile.mv(filePath, function(err) {
-    if (err) return res.status(500).send(err);
-    const { exec } = require('child_process');
-    const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
+  const { exec } = require('child_process');
+  const { spawn } = require('child_process');
+  const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
+  const mol = req.body.molecular || '';
+  const calTypePy = `${python_path}/ca_all_molhop.py`;
+  if ( req.files ) {
+    let molecularFile = req.files.molecularFile;
+    // Use the mv() method to place the file somewhere on your server
+    const filePath = `${__dirname}/../public/upload/${molecularFile.name}`;
+    molecularFile.mv(filePath, function(err) {
+      if (err) return res.status(500).send(err);
+      execFunc(mol, filePath, calTypePy);
+    });
+  } else {
+    execFunc(mol, '', calTypePy);
+  }
+  function execFunc(mol, filePath, calTypePy) {
     exec(cmdStr, function (err, stdout, stderr) {
       if (stdout && stdout > 2) {
         rst.msg = 'The server is busy at the moment. Please try again two minitues later '
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
       } else {
-        const calTypePy = `${python_path}/ca_all_molhop.py`;
-        const { spawn } = require('child_process');
         py = spawn('python', [calTypePy]);
         const data = [];
-        const mol = req.body.molecular || '';
         data.push(mol, filePath);
         let dataString = '';
+
         py.stdout.on('data', function (data) {
           dataString += data.toString();
         });
-
         py.stdout.on('end', function () {
           // when dataString is not avaliable
           if (dataString == '' || dataString == null) {
@@ -113,10 +122,11 @@ exports.cal_opt_step_one = function (req, res, next) {
         });
 
         py.stdin.write(JSON.stringify(data));
+        
         py.stdin.end();
       }
     });
-  });
+  }
 }
 
 exports.cal_opt_step_two = function (req, res, next) {
