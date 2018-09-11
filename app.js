@@ -113,7 +113,7 @@ app.use(expressValidator({
 	}
 }));  // validator for express
 app.use(fileUpload({
-	limits: { fileSize: 50 * 1024 },
+	limits: { fileSize: 10 * 1024 * 1024 },
 }));	 // file upload
 
 
