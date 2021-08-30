@@ -10,7 +10,7 @@ var gcnController = require('../controllers/gcnController');
 var pkbController = require('../controllers/pkbController');
 var pkaController = require('../controllers/pkaController');
 var hopController = require('../controllers/hopController')
-var signController = require('../controllers/signController');
+// var signController = require('../controllers/signController');
 var orderController = require('../controllers/orderController');
 var sampleController = require('../controllers/sampleController');
 var gpkaController = require('../controllers/gpkaController');
@@ -27,19 +27,19 @@ router.get('/', function(req, res, next) {
   res.render('drug/pc/index', {'accesscount': pvcount(1)});
 });
 
-router.get('/home', check.checkLogin, signController.home);
+// router.get('/home', check.checkLogin, signController.home);
 
-// login/logout/register
-router.get('/signin', check.checkNotLogin, signController.getSignin);
-router.post('/signin', check.checkNotLogin, signController.postSignin);
-router.get('/signout', check.checkLogin, signController.getSignout);
-router.get('/signup', check.checkNotLogin, signController.getSignup);
-router.post('/signup', check.checkNotLogin, signController.postSignup);
-router.get('/captcha/:id', signController.captcha);
-router.get('/search_pass', signController.getSearch_pass);
-router.post('/search_pass', signController.postSearch_pass);
-router.get('/reset_pass', signController.getReset_pass);
-router.post('/reset_pass', signController.postReset_pass);
+// // login/logout/register
+// router.get('/signin', check.checkNotLogin, signController.getSignin);
+// router.post('/signin', check.checkNotLogin, signController.postSignin);
+// router.get('/signout', check.checkLogin, signController.getSignout);
+// router.get('/signup', check.checkNotLogin, signController.getSignup);
+// router.post('/signup', check.checkNotLogin, signController.postSignup);
+// router.get('/captcha/:id', signController.captcha);
+// router.get('/search_pass', signController.getSearch_pass);
+// router.post('/search_pass', signController.postSearch_pass);
+// router.get('/reset_pass', signController.getReset_pass);
+// router.post('/reset_pass', signController.postReset_pass);
 
 // order
 router.get('/delete/:id', orderController.deleteOrder);
