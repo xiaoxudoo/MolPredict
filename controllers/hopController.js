@@ -25,7 +25,7 @@ exports.run_example = function (req, res, next) {
   const { exec } = require('child_process');
   const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   exec(cmdStr, function (err, stdout, stderr) {
-    if (stdout && stdout > 2) {
+    if (stdout && stdout > 4) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
@@ -80,20 +80,28 @@ exports.cal_opt_step_one = function (req, res, next) {
   const { spawn } = require('child_process');
   const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   const mol = req.body.molecular || '';
-  const calTypePy = `${python_path}/ca_all_molhop.py`;
-  if ( req.files.molecularFile ) {
+  //const calTypePy = `${python_path}/ca_all_molhop.py`;
+  const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}.py` : `${python_path}/ca_${routeName}.py`
+  if ( req.files.molecularFile && req.files.molecularLig) {
     const molecularFile = req.files.molecularFile;
+    const molecularLig  = req.files.molecularLig;
     const filePath = `${__dirname}/../public/upload/${molecularFile.name}`;
+    const LigPath = `${__dirname}/../public/upload/${molecularLig.name}`;
+    molecularLig.mv(LigPath, function(err) {
+      if (err) return res.status(500).send(err);
+      //execFunc(mol, filePath, calTypePy);
+    });
     molecularFile.mv(filePath, function(err) {
       if (err) return res.status(500).send(err);
-      execFunc(mol, filePath, calTypePy);
+      execFunc(mol, filePath, LigPath, calTypePy);
     });
-  } else {
-    execFunc(mol, '', calTypePy);
+  } 
+  else {
+    execFunc(mol, '', '', calTypePy);
   }
-  function execFunc(mol, filePath, calTypePy) {
+  function execFunc(mol, filePath, LigPath, calTypePy) {
     exec(cmdStr, function (err, stdout, stderr) {
-      if (stdout && stdout > 2) {
+      if (stdout && stdout > 4) {
         rst.msg = 'The server is busy at the moment. Please try again two minitues later '
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
@@ -101,7 +109,7 @@ exports.cal_opt_step_one = function (req, res, next) {
 	console.log('debug');
         const py = spawn('python', [calTypePy]);
         const data = [];
-        data.push(mol, filePath);
+        data.push(mol, filePath, LigPath);
         let dataString = '';
 
         py.stdout.on('data', function (data) {
@@ -151,9 +159,9 @@ exports.cal_opt_step_two = function (req, res, next) {
   exec(cmdStr, function (err, stdout, stderr) {
     let isRunning = null;
     if (process.env.NODE_ENV === 'production') {
-      isRunning = stdout && stdout > 1;
+      isRunning = stdout && stdout > 3;
     } else {
-      isRunning = stdout && stdout < 1;
+      isRunning = stdout && stdout < 3;
     }
     // 如果未登录
     if (!req.session.user) {

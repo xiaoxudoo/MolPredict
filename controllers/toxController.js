@@ -21,13 +21,13 @@ exports.run_example = function (req, res, next) {
   var cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   // TODO... 后续优化run_example
   exec(cmdStr, function (err, stdout, stderr) {
-    if (stdout && stdout > 1) {
+    if (stdout && stdout > 14) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later or LOGIN to queue up a job'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
       var cp = require('child_process'),
-        py = cp.spawn('python', [`${python_path}/ca_all_${routeName}.py`]),
+        py = cp.spawn('python', [`${python_path}/moltox_py/ca_all_${routeName}.py`]),
 
         data = [],
         dataString = '';
@@ -73,9 +73,9 @@ exports.cal_tox = function (req, res, next) {
   exec(cmdStr, function (err, stdout, stderr) {
     let isRunning = null;
     if (process.env.NODE_ENV === 'production') {
-      isRunning = stdout && stdout > 1;
+      isRunning = stdout && stdout > 13;
     } else {
-      isRunning = stdout && stdout < 1;
+      isRunning = stdout && stdout < 13;
     }
     // 如果未登录
     if (!req.session.user) {
@@ -84,7 +84,7 @@ exports.cal_tox = function (req, res, next) {
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
       } else {
-        const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}.py` : `${python_path}/ca_${routeName}.py`
+        const calTypePy = req.body.runType ? `${python_path}/moltox_py/ca_${req.body.runType}_${routeName}.py` : `${python_path}/moltox_py/ca_${routeName}.py`
 
         const { spawn } = require('child_process');
 

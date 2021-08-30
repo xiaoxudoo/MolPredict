@@ -1,0 +1,65 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 Analogues  
+    br
+    br
+    .row.fluid
+      .span12
+        for item in items
+          if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
+            .well
+              h4 #{item.Table_Name}:
+              table.table.table-hover.table-striped
+                thead
+                  tr
+                    each tvalue, thead in item.Table_Context[0]
+                      th #{thead}
+                tbody
+                  for subitem in item.Table_Context
+                    tr
+                      each bvalue in subitem
+                        if bvalue.toString().indexOf(".svg") > -1
+                          td
+                            object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
+                        else if bvalue.toString().indexOf(".rsmi") > -1
+                          td
+                            a(href="#{bvalue}") download
+                        else if bvalue.toString().indexOf("3dmol.csb.pitt.edu") > -1
+                          td
+                            a(href="#{bvalue}" target="_blank") 3DView
+                        else if bvalue.toString().indexOf(".mol2") > -1
+                          td
+                            a(href="#{bvalue}") mol2 
+                        else if bvalue.toString().indexOf(".sdf") > -1
+                          td
+                            a(href="#{bvalue}") sdf
+                        else if bvalue.toString().indexOf("tf_") > -1
+                          td
+                            a(href="#{bvalue}") history
+                        else
+                          td #{bvalue}
+        .row-fluid
+          .span4
+            a.btn.btn-info(type='button', href='/mol3dopt')
+              i.icon-repeat
+              |  Run another job
+          .span4
+            form
+              input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
+    br
+    br
+    hr
+
+block scripts
+    script.
+      $(function ()
+      {
+      $("#pop1").popover({
+      html: true,
+      animation: true
+      });
+      });

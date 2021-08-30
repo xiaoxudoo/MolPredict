@@ -79,8 +79,10 @@ html.no-js
               a.brand.brand_small(href='/home') hi, #{user.username}&nbsp; |
               a.brand.brand_small(href='/signout') logout
             else         
-              a.brand.brand_small(href='/home') hi, guest&nbsp; |
-              a.brand.brand_small(href='/signin') login
+              //a.brand.brand_small(href='/home') hi, guest&nbsp; |
+              a.brand.brand_small(href='/home') hi,guest &nbsp; |
+              //a.brand.brand_small(href='/signin') login
+              a.brand.brand_small(href='/home') welcome 
     block content
     footer.container
       .row
@@ -90,7 +92,7 @@ html.no-js
           // Access count
           span(style="font-size:12px;margin-right:20px;")  Page View: #{accesscount}
           // Internet Content Provider
-          a(href="http://www.miitbeian.gov.cn",style="font-size:12px;margin-right:20px;") 沪ICP备17025598号
+          a(href="https://beian.miit.gov.cn",style="font-size:12px;margin-right:20px;") 沪ICP备17025598号
           // Open Knowledge Link
           a(href='http://opendefinition.org/okd', target='_blank')
             img(alt='This material is Open Knowledge', border='0', src='http://assets.okfn.org/images/ok_buttons/ok_80x15_blue.png')

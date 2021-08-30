@@ -1,0 +1,153 @@
+extends ./layouts/layout
+
+block content
+  .container
+    .hero-unit
+      h2 Welcome to Structure-Guided Drug Design System 
+    .row
+      .span4
+        a.example-image-link(href='/pkcsm/static/img/mol3dopt_pre.png', data-lightbox='example-1')
+          img.example-image(src='/pkcsm/static/img/mol3dopt_pre.png', alt='image-1')
+        br
+        br
+        br
+        .alert.alert-block
+          button.close(type='button', data-dismiss='alert') ×
+          h4 Disclaimer
+          br
+          p(align='justify')
+            | No molecule information will be retained on the system.
+      .span7.offset1
+        form#myform2(enctype='multipart/form-data', action='/mol3dopt/silicoopt', method='POST')
+          h3
+            | Step 1: Please provide a protein and a ligand file 
+            br
+            a#pop1.btn.btn-mini(href='javascript:void(0);', rel='popover', data-placement='bottom', data-content="<p\
+            align='justify'>Please provide a protein and a ligand file with pdb or mol2 type.</p>", data-original-title='<b>Data input</b>') Description
+          .row
+            .span3
+              .well
+                label.control-label
+                h5
+                font(color='gb2312') Please upload a Protein file :
+                br
+                font(color='gb2312') (mol2 or pdb format)
+                input#myinput2.span2(type='file', name='molecularFile', style="width:200px;")
+              //  a(href="./static2/5v3x_pro.mol2") Example: Protein File
+            .span3
+              .well
+                label.control-label
+                h5
+                font(color='gb2312') Please upload a Ligand file :
+                br
+                font(color='gb2312') (mol2 or pdb format)
+                input#myinput3.span2(type='file', name='molecularLig', style="width:200px;")
+              //  a(href="./static2/5v3x_lig.mol2") Example: Ligand File
+            .span6
+              .well
+                label.control-label
+                h5
+                font(color='gb2312') Example1:
+                br
+                a(href="./static2/5v3x_pro.mol2")  Protein File
+                a(href="./static2/5v3x_lig.mol2")  Ligand File
+                label.control-label
+                h5
+                font(color='gb2312') Example2:
+                br
+                a(href="./static2/5v3x_pro.mol2") Protein File
+                a(href="./static2/5v3x_lig.mol2") Ligand File
+            //.span3
+            //  .well
+            //    label.control-label
+            //    a(href="./static2/5v3x_pro.mol2") Example3: Protein File
+            //    br
+            //    a(href="./static2/5v3x_lig.mol2") Example3: Ligand File
+            //.span3
+            //  .well
+            //    label.control-label
+            //    a(href="./static2/5v3x_pro.mol2") Example4: Protein File
+            //    br
+            //    a(href="./static2/5v3x_lig.mol2") Example4: Ligand File
+          input#runtype(type='hidden', name='runType', value='')
+          div#errormsg(style="color:red;text-align:left;")
+          .row
+            .span7
+              hr(style='border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff;')
+          h3
+            | Step 2: Please select design strategy 
+            br
+            a#pop3.btn.btn-mini(href='javascript:void(0);', rel='popover', data-placement='top', data-content="<p\
+            align='justify'>Click the Button to run calculations, and wait for two mins ...</p>", data-original-title='<b>Run Prediction</b>') Description
+          .row
+            .span7
+              h4 Fragment Replacing
+              .well
+                .btn-toolbar
+                  .btn-group.span3
+                    button.btn.btn-primary.span3(type='submit', data-type="Step1SQL" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Match Fragment Fingerprint 
+                  .btn-group
+                    button.btn.btn-primary.span3(type='submit', data-type="ring" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Ring mutation
+                .btn-toolbar
+                  .btn-group.span3
+                    button.btn.btn-warning.span3(type='submit', data-type="Step1pro" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Match Protein's Environment 
+                  .btn-group
+                    button.btn.btn-warning.span3(type='submit', data-type="Step1chemfp" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Similarity comparision 
+              h4 Fragment Growing
+              .well
+                .btn-toolbar
+                  .btn-group.span3
+                    button.btn.btn-primary.span3(type='submit', data-type="Step1grow" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Match Protein's Environment
+                  .btn-group
+                    button.btn.btn-primary.span3(type='submit', data-type="Step1small" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Virtual Probe
+
+
+                
+    hr
+  div.cal-mask(style="display:none;")
+    #wave.wave
+  style.
+    .wave{position:relative;width:200px;height:200px;overflow:hidden;border-radius:50%;background:rgba(255,203,103,.6);text-align:center;display:table-cell;vertical-align:middle;}
+    .wave canvas{position:absolute;left:0;top:0;z-index:1;}
+
+block scripts
+  script.
+    var smiles = "";
+    var jme = "0 0";
+    function startEditor() {
+    window.open('/pkcsm/jme_window.html','JME','width=500,height=450,scrollbars=no,resizable=yes');
+    }
+    function fromEditor(smiles,jme) {
+    if (smiles=="") {
+    alert ("no molecule submitted");
+    return;
+    }
+    document.getElementById('myinput').value = smiles;
+    }
+
+  script.
+    $(function ()
+    {
+    $("#pop1").popover({
+    trigger:'hover',
+    html: true,
+    animation: true
+    });
+    $("#pop3").popover({
+    trigger:'hover',
+    html: true,
+    animation: true
+    });
+    });

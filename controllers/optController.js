@@ -25,13 +25,13 @@ exports.run_example = function (req, res, next) {
   const { exec } = require('child_process');
   const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   exec(cmdStr, function (err, stdout, stderr) {
-    if (stdout && stdout > 2) {
+    if (stdout && stdout > 13) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later...'
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
       const { spawn } = require('child_process');
-      py = spawn('python', [`${python_path}/ca_all_${routeName}.py`]);
+      py = spawn('python', [`${python_path}/molopt_py/ca_all_${routeName}.py`]);
       const data = [];
       let dataString = '';
       data.push("CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O", "0.1");
@@ -71,12 +71,12 @@ exports.cal_opt_step_one = function (req, res, next) {
   const { exec } = require('child_process');
   const cmdStr = 'ps -aux | grep python | grep ca_ |wc -l';
   exec(cmdStr, function (err, stdout, stderr) {
-    if (stdout && stdout > 2) {
+    if (stdout && stdout > 14) {
       rst.msg = 'The server is busy at the moment. Please try again two minitues later '
       res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
       return false;
     } else {
-      const calTypePy = req.body.runType ? `${python_path}/ca_${req.body.runType}_${routeName}.py` : `${python_path}/ca_${routeName}.py`
+      const calTypePy = req.body.runType ? `${python_path}/molopt_py/ca_${req.body.runType}_${routeName}.py` : `${python_path}/molopt_py/ca_${routeName}.py`
       const { spawn } = require('child_process');
       py = spawn('python', [calTypePy]);
       const data = [];
@@ -129,9 +129,9 @@ exports.cal_opt_step_two = function (req, res, next) {
   exec(cmdStr, function (err, stdout, stderr) {
     let isRunning = null;
     if (process.env.NODE_ENV === 'production') {
-      isRunning = stdout && stdout > 1;
+      isRunning = stdout && stdout > 13;
     } else {
-      isRunning = stdout && stdout < 1;
+      isRunning = stdout && stdout < 13;
     }
     // 如果未登录
     if (!req.session.user) {
@@ -141,7 +141,7 @@ exports.cal_opt_step_two = function (req, res, next) {
         return false;
       } else {
         const { spawn } = require('child_process');
-        py = spawn('python', [`${python_path}/ca_replace_molopt.py`]);
+        py = spawn('python', [`${python_path}/molopt_py/ca_replace_molopt.py`]);
         const data = [];
         let dataString = '';
 

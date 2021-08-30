@@ -1,0 +1,71 @@
+doctype html
+//if lt IE 7
+  html.no-js.lt-ie9.lt-ie8.lt-ie7  
+//if IE 7
+  html.no-js.lt-ie9.lt-ie8  
+//if IE 8
+  html.no-js.lt-ie9  
+// [if gt IE 8] <!
+|  
+html.no-js
+  // <![endif]
+  head
+    meta(charset='utf-8')
+    title MolOpt
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Web-version of pkMOL')
+    meta(name='author', content='xiaoxudong')
+    // Styles
+    link(href='/pkcsm/static/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+    style(type='text/css').
+      body {
+      position: relative;
+      padding-top: 60px;
+      padding-bottom: 40px;
+      }
+      td.dreta {
+      text-align: right;
+      }
+      .alert-info {
+      color: #FF00FF;
+      }
+      .cal-mask {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left:0;
+      background:rgba(0,0,0,0.7);
+      z-index: 9999;
+      text-align:center;
+      padding-top:15%;
+      padding-left:40%;
+      font-size: 40px;
+      color: #fff;
+      }
+      .brand_small {
+      font-size: 16px!important;
+      margin-left: -30px!important;
+      }
+    link(href='/pkcsm/static/bootstrap/css/bootstrap-responsive.min.css', rel='stylesheet')
+    link(href='/pkcsm/static/lightbox/css/lightbox.css', rel='stylesheet')
+    // HTML5 shim, for IE6-8 support of HTML5 elements
+    //if lt IE 9
+      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+    //
+      to paginate tables from http://datatables.net/blog/Twitter_Bootstrap_2
+      NEED TO PUT id="example" in your tables :-)
+      ==================================================
+    // 
+  body
+    // TOP BAR NAVIGATION
+
+          
+    block content
+
+    // script mark here
+    script(src='/pkcsm/static/lightbox/js/jquery-1.11.0.min.js')
+    script(src='/pkcsm/static/lightbox/js/lightbox.min.js')
+    script(src='/pkcsm/static/bootstrap/js/bootstrap.min.js')
+    script(src='/pkcsm/static/js/main_opt.js')
+    block scripts

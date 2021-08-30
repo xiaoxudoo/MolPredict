@@ -16,12 +16,17 @@ $('#myform2 #myinput2').change(function (evt) {
   $('#runtype').val(type)
 })
 
+$('#myform2 #myinput3').change(function (evt) {
+  var type = $(this).data('type')
+  $('#runtype').val(type)
+})
+
 $('#myform2').submit(function (evt) {
 
   var val = $(this).find('#myinput').val();
   var val2 = $(this).find('#myinput2').val();
-
-  if (!val && !val2) {
+  var val3 = $(this).find('#myinput3').val();
+  if (!val && !val2 && !val3) {
       $("#errormsg").html("The molecules cannot be empty.");
       window.scrollTo(0,0);
       return false;

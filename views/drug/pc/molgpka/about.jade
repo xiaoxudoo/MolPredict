@@ -1,0 +1,58 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 pKa Prediction by Graph-Convolutional Neural Network
+    .hero-unit
+      h3 Purpose of MolGpKa 
+      h2
+      p Fast and accurate prediction of the pKa values of small molecules is important in the drug discovery process since the ionization state of a drug has significant influence on its activity and ADME-Tox properties. MolGpKa is a web server for pKa prediction using graph-convolutional neural network model. The model works by learning pKa related chemical patterns automatically and building reliable predictors with learned features.  
+
+
+    .hero-unit
+      h3 Molecular Graph and Graph Convolutional Neural Network
+      p  A molecule is composed of atoms connected by bonds. We can treat the atoms and the bonds as nodes and edges of a graph respectively. A molecular graph can be represented as a node features matrix X and an adjacency matrix A. The node features matrix X describes property of each atom, including atom type, atom hybrid state, atom degree and whether it is the ionization center. The adjacency matrix A describes how the atoms are connected in the molecule. 
+      p The graph convolutional neural network includes two phases: (i) message passing phase (node convolution), which encodes information of each atom and its neighbors to build an embedded representation Z of the molecule with convolutional layers; (ii) readout phase, which uses the output of the message passing phase to predict pKa with fully connected layers.
+      br
+      p     
+      h2
+         img(src='/pkcsm/static/img/molgpka_gcn.png', style='border: none;', vertical-align=middle,width='700',height='70')
+
+
+    .hero-unit
+      h3 Workflow of MolGpKa 
+      p MolGpka takes three steps to predict pKa of a molecule. In the first step, the input structure is processed by RDKit, including removing small fragments, neutralizing charges and adding hydrogens. In the second step, ionizable sites are identified by substructure matching. In the third step, the atom feature matrix and the adjacency matrix are built and used as the molecular graph input for pKa prediction by the graph neural network.
+      br
+      p     
+      h2
+         img(src='/pkcsm/static/img/molgpka_workflow.png', style='border: none;', vertical-align=middle,width='900',height='90')
+
+
+    .hero-unit
+      //h3 Data Download 
+      h2     
+      //p All the datasets used in building pKa predictors:
+      //li: a(href='/xx.tar.gz') pka_train_data
+
+      h3 SMARTS for ionizable substructures:
+      li: a(href='/data/SMARTS_Ionizable_groups.docx') ionizable_site_smarts
+
+    .hero-unit
+      h3 Citing MolGpKa 
+      h2     
+      p If this service is useful to you, please cite:
+      li: a(href='https://pubs.acs.org/doi/10.1021/acs.jcim.1c00075') Xiaolin Pan, Hao Wang, Cuiyu Li, John Z. H. Zhang, and Changge Ji; MolGpka: A Web Server for Small Molecule pKa Prediction Using a Graph-Convolutional Neural Network. Journal of Chemical Information and Modeling, 2021, ASAP. 
+
+    .hero-unit
+      h3 Contact
+      h2     
+      p If you have any question about MolGpKa, please contact:
+      p Changge Ji 
+      p Chicago.ji@gmail.com
+
+
+
+block scripts
+  

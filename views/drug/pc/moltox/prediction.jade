@@ -33,7 +33,8 @@ block content
                 label.control-label
                   p
                   h5
-                    font(color='#616D7E') Provide a molecule (SMILES, IUPAC/Commercial Name, CAS Number or InChI Key): 
+                    //font(color='#616D7E') Provide a molecule (SMILES, IUPAC/Commercial Name, CAS Number or InChI Key): 
+                    font(color='#616D7E') Provide a molecule (SMILES): 
                   p
                 input#myinput.span2(type='text', name='molecular', size='200', style="width:200px;")
                 &nbsp;&nbsp;
@@ -43,8 +44,9 @@ block content
                 input#runtype(type='hidden', name='runType', value='')
                 div#errormsg(style="color:red;text-align:left;")
                 br
-                h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O , 126-12-5 , Aspirin
-                p Significance:<input style="vertical-align:0;width:40px;margin-left:10px;" name='significant' type="text" value="0.1" placeholder="0.1">
+                //h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O , 126-12-5 , Aspirin
+                h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O 
+                p Significance (expected frequency of errors):<input style="vertical-align:0;width:40px;margin-left:10px;" name='significant' type="text" value="0.02" placeholder="0.02">
           .row
             .span7
               hr(style='border-top: 3px solid #eeeeee; border-bottom: 3px solid #ffffff;')

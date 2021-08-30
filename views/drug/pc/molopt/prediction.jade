@@ -43,7 +43,7 @@ block content
                 input#runtype(type='hidden', name='runType', value='')
                 div#errormsg(style="color:red;text-align:left;")
                 br
-                h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O , 126-12-5 , Aspirin
+                h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O 
           .row
             .span7
               hr(style='border-top: 3px solid #eeeeee; border-bottom: 3px solid #ffffff;')
@@ -61,11 +61,20 @@ block content
                   .btn-group.span3
                     button.btn.btn-primary.span3(type='submit', data-type="all" style='padding: 8px 20px')
                       i.icon-play.icon-white
-                      b Based on Rules From Data Mining 
+                      b Rules From Data Mining 
                   .btn-group
                     button.btn.btn-primary.span3(type='submit', data-type="sim" style='padding: 8px 20px')
                       i.icon-play.icon-white
-                      b Based on Similarity Comparision
+                      b Similarity Comparision
+                .btn-toolbar
+                  .btn-group.span3
+                    button.btn.btn-primary.span3(type='submit', data-type="all2" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Rules From Data Mining (fast) 
+                  .btn-group
+                    button.btn.btn-primary.span3(type='submit', data-type="rei" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b AI Generative Model
     hr
   // 悬浮球
   div.cal-mask(style="display:none;")

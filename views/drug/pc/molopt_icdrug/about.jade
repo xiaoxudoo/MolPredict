@@ -1,0 +1,41 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 Welcome to In silico Bioisosteric Replacement System
+    .hero-unit
+      h3 What is bioisosteric replacement 
+      h2
+      p  A bioisosteric replacement transforms an active compound into another compound by swapping functional groups of a molecule with other substructures that share similar shapes, volumes, electronic distributions and physiochemical properties which produce similar biological properties. Bioisosteric replacement is widely used in drug discovery to improve potency and selectivity, solve problems associated with drug pharmacokinetics and to remove unwanted side effects such as toxicity and metabolic liabilities. 
+      
+      p     
+      h2
+         img(src='/pkcsm/static/img/molopt_biotrans.png', style='border: none;', width='700')
+
+
+    .hero-unit
+      h3 Purpose of MolOpt
+      h2
+      p MolOpt is a web server for in silico drug design using bioisostetric transformation rules derived  from data mining, deep generative models and similarity comparison. MolOpt is useful for the navigation of historical bioisosteric group space and identification of new bioisosteric transformation ideas. MolOpt automatically generates lists of analogues by replacing molecular substructures with chemical groups with similar biological properties. The resulting set of transformed analogues can be evaluated for possible future synthesis. MolOpt tries to assist the medicinal chemist in his/her search for what to make next.
+ 
+      p     
+      h2
+         img(src='/pkcsm/static/img/molopt_flow.png', style='border: none;', width='700')
+
+
+
+
+
+    .hero-unit
+      h3 Contact
+      h2     
+      p If you have any question about MolOpt, please contact:
+      p Changge Ji 
+      p Chicago.ji@gmail.com
+
+
+
+block scripts
+  

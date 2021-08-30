@@ -1,0 +1,46 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 Structure-based Drug Design by Fragment Replacement 
+    .hero-unit
+      h3 What is FragRep ?
+      h2
+      br
+      br
+      p FragRep is a web server for automated structure-based ligand design by fragment replacement. The input is a protein and a ligand structure, either from protein data bank or from molecular docking. Users can choose specific substructures they want to modify. The server tries to find suitable fragments that not only meet the geometric requirements of the remaining part of the ligand but also fit well with local protein environments. FragRep is a powerful computational tool for rapid generation of ligand design ideas; either in scaffold hopping or bioisosteric replacing. 
+      br
+      p     
+      h2
+         img(src='/pkcsm/static/img/mol3dopt_pre4.png', style='border: none;', vertical-align=middle,width='1000',height='100')
+
+    .hero-unit
+      h3 How FragRep works ?
+      h2
+      br
+      br
+      p FragRep takes five steps to replace a fragment. In the first step, the input structure is processed by Pdbfixer and Open Babel. The local protein environment around the ligand is analyzed and properties of atoms in the binding pocket are extracted for fragment searching in the second step and for fragment scoring in the fourth step. In the second step, the input ligand is cut into fragments on acyclic single bonds and pictured on the web server for choosing. Users select the specific substructure they want to replace. In the third step, the program searches the fragment database to find proper fragments for automatic replacement. Two types of query criteria were used in the automatic fragment searching step. One type is the geometric relationships between the broken bonds which is critical when replacing the core of the ligand with another fragment. The other is the required polar atoms on the fragments who are supposed to form interactions with the protein pocket atoms. In the fourth step, the fragments were aligned to the original ligand and scored by a linear protein-ligand binding affinity scoring function. In the fifth step, the program merge top-scored fragments with the input ligand and evaluate stability and synthesis ability of the newly generated molecule. 
+      br
+      p     
+      h2
+         img(src='/pkcsm/static/img/mol3dopt_pre3.png', style='border: none;', width='1000')
+
+    .hero-unit
+      h3 Citing FragRep 
+      h2     
+      p If this service is useful to you, please cite:
+      li: a(href='https://pubs.acs.org/doi/10.1021/acs.jcim.0c00767') Jinwen Shan, Xiaolin Pan, Xingyu Wang, Xudong Xiao, and Changge Ji; FragRep: A Web Server for Structure-Based Drug Design by Fragment Replacement, Journal of Chemical Information and Modeling, 2020, 60, 5900.
+
+    .hero-unit
+      h3 Contact
+      h2     
+      p If you have any question about FragRep, please contact:
+      p Changge Ji 
+      p Chicago.ji@gmail.com
+
+
+
+block scripts
+  

@@ -1,0 +1,73 @@
+REMARK   4      COMPLIES WITH FORMAT V. 3.0, 1-DEC-2006
+REMARK 888
+REMARK 888 WRITTEN BY MAESTRO (A PRODUCT OF SCHRODINGER, LLC)
+TITLE     1fkw_ligand
+HETATM    1  N1  PUR     1       1.417  20.582  39.043  1.00  0.00           N  
+HETATM    2  C2  PUR     1       2.414  20.281  39.873  1.00  0.00           C  
+HETATM    3  N3  PUR     1       3.598  19.837  39.445  1.00  0.00           N  
+HETATM    4  C4  PUR     1       3.815  19.669  38.114  1.00  0.00           C  
+HETATM    5  C5  PUR     1       2.843  19.951  37.215  1.00  0.00           C  
+HETATM    6  C6  PUR     1       1.572  20.433  37.671  1.00  0.00           C  
+HETATM    7  N7  PUR     1       3.333  19.699  35.988  1.00  0.00           N  
+HETATM    8  C8  PUR     1       4.584  19.263  36.124  1.00  0.00           C  
+HETATM    9  N9  PUR     1       4.896  19.238  37.414  1.00  0.00           N  
+HETATM   10  C1' PUR     1       6.119  18.740  37.956  1.00  0.00           C  
+HETATM   11  C2' PUR     1       6.524  17.522  37.133  1.00  0.00           C  
+HETATM   12  O2' PUR     1       6.725  16.400  37.996  1.00  0.00           O  
+HETATM   13  C3' PUR     1       7.791  17.835  36.281  1.00  0.00           C  
+HETATM   14  O3' PUR     1       8.717  16.743  36.300  1.00  0.00           O  
+HETATM   15  C4' PUR     1       8.237  19.017  37.267  1.00  0.00           C  
+HETATM   16  O4' PUR     1       7.141  19.688  37.768  1.00  0.00           O  
+HETATM   17  C5' PUR     1       9.207  20.029  36.595  1.00  0.00           C  
+HETATM   18  O5' PUR     1       8.690  20.575  35.359  1.00  0.00           O  
+HETATM   19  H1  PUR     1       2.258  20.401  40.939  1.00  0.00           H  
+HETATM   20  H2  PUR     1       0.772  20.669  36.979  1.00  0.00           H  
+HETATM   21  H3  PUR     1       5.245  18.974  35.308  1.00  0.00           H  
+HETATM   22  H4  PUR     1       6.001  18.489  39.020  1.00  0.00           H  
+HETATM   23  H5  PUR     1       5.702  17.280  36.443  1.00  0.00           H  
+HETATM   24  H6  PUR     1       6.930  15.633  37.474  1.00  0.00           H  
+HETATM   25  H7  PUR     1       7.584  18.154  35.249  1.00  0.00           H  
+HETATM   26  H8  PUR     1       8.772  16.391  37.181  1.00  0.00           H  
+HETATM   27  H9  PUR     1       8.769  18.556  38.113  1.00  0.00           H  
+HETATM   28  H10 PUR     1      10.156  19.515  36.381  1.00  0.00           H  
+HETATM   29  H11 PUR     1       9.389  20.858  37.295  1.00  0.00           H  
+HETATM   30  H12 PUR     1       9.321  21.184  34.995  1.00  0.00           H  
+CONECT    1    6    2
+CONECT    1    6
+CONECT    2    1    3   19
+CONECT    2    3
+CONECT    3    2    4
+CONECT    3    2
+CONECT    4    3    9    5
+CONECT    4    5
+CONECT    5    4    7    6
+CONECT    5    4
+CONECT    6    1    5   20
+CONECT    6    1
+CONECT    7    5    8
+CONECT    7    8
+CONECT    8    7    9   21
+CONECT    8    7
+CONECT    9    4    8   10
+CONECT   10    9   16   11   22
+CONECT   11   10   13   12   23
+CONECT   12   11   24
+CONECT   13   11   15   14   25
+CONECT   14   13   26
+CONECT   15   13   17   16   27
+CONECT   16   10   15
+CONECT   17   15   18   28   29
+CONECT   18   17   30
+CONECT   19    2
+CONECT   20    6
+CONECT   21    8
+CONECT   22   10
+CONECT   23   11
+CONECT   24   12
+CONECT   25   13
+CONECT   26   14
+CONECT   27   15
+CONECT   28   17
+CONECT   29   17
+CONECT   30   18
+END   

@@ -1,0 +1,96 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    .hero-unit
+      h2 Please select substructure you want to optimize, click 'Submit' and wait for two minutes. 
+    br
+    br
+    .row.fluid
+      .span4
+        for item in items
+          if item.Table_Name == 'Molecule Picture'
+            .well
+              h4 Molecule Depiction
+              br
+              div(align='center')
+                img.img-rounded(src='#{item.Table_Context[0].Structure}', style='PADDING-RIGHT: 20px PADDING-TOP: 20px')
+              br
+              span#pop1.btn.btn-mini.btn-inverse(href='#', rel='popover', data-placement='right', data-content='#{item.Table_Context[0].Molecule}', data-original-title='<b>SMILES</b>') Mol
+        h4 Molecule properties:
+        for item in items
+          if item.Table_Name == 'Molecule Property'
+            table.table.table-hover.table-condensed
+              thead
+                each tvalue, thead in item.Table_Context[0]
+                  th #{thead}
+              tbody
+                for subitem in item.Table_Context
+                  tr
+                    each bvalue in subitem
+                      if bvalue.indexOf(".svg") > -1
+                        td
+                          object(data='#{bvalue}', width='450', height='200', type='image/svg+xml')
+                      else
+                        td #{bvalue}
+      .span8
+        for item in items
+          if item.Table_Name !== 'Molecule Property' && item.Table_Name !== 'Molecule Picture'
+            form#myform3(enctype='application/x-www-form-urlencoded', action='/molopt_icdrug/optimize', method='POST')
+              //- input(id='molecular', type='hidden', name="molecular" value="default")
+              .well  
+                h4 #{item.Table_Name}:
+                table.table.table-hover.table-striped
+                  thead
+                    tr
+                      each tvalue, thead in item.Table_Context[0]
+                        th #{thead}
+                  tbody
+                    for subitem, i in item.Table_Context
+                      tr
+                        each bvalue, j in subitem
+                          if bvalue.indexOf(".svg") > -1
+                            td
+                              object(data='#{bvalue}', width='400', height='200', type='image/svg+xml')
+                          else if j == 'Index'
+                            td 
+                              #{bvalue}
+                              br
+                              input(type='radio', name="rsmi", value="#{subitem['frag_name']}")
+                          else if bvalue.toString().indexOf("frag_") > -1
+                            td
+                              a(href="#{bvalue}") 
+                          else 
+                            td #{bvalue}
+              .btn-group
+                  button.btn.btn-primary.span3(type='submit', style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Submit
+               // .span4
+               //   input.btn.btn-inverse(type='button', value='Back', onclick='history.go(-1);return true;')
+    br
+    br
+    hr
+  // 悬浮球
+  div.cal-mask(style="display:none;")
+    #wave.wave
+  style.
+    .wave{position:relative;width:200px;height:200px;overflow:hidden;border-radius:50%;background:rgba(255,203,103,.6);text-align:center;display:table-cell;vertical-align:middle;}
+    .wave canvas{position:absolute;left:0;top:0;z-index:1;}
+
+block scripts
+  script.
+    $(function ()
+    {
+    $("#pop1").popover({
+    trigger:'hover',
+    html: true,
+    animation: true
+    });
+    $("#pop3").popover({
+    trigger:'hover',
+    html: true,
+    animation: true
+    });
+    });

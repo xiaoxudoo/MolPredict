@@ -29,6 +29,28 @@ block content
             align='justify'>Please provide a molecule.</p>", data-original-title='<b>Data input</b>') Description
           .row
             .span7
+              h4  Please upload a protein-ligand complex
+              .well
+                label.control-label
+                
+             
+                  
+                h5
+                font(color='#616D7E') Upload a Protein file:
+                br
+                br
+                input#myinput2.span2(type='file', name='molecularFile', style="width:200px;")
+                br
+                a(href="./static/test.sdf") Example_Protein-Ligand_complex
+                br
+                br
+                h5
+                font(color='#616D7E') Upload a Ligand file:
+                br
+                input#myinput3.span2(type='file', name='molecularLig', style="width:200px;")
+                br
+                a(href="./static/test.sdf") Example_Protein-Ligand_complex
+              h4 Or please input a PDB ID 
               .well
                 label.control-label
                   p
@@ -44,17 +66,8 @@ block content
                 div#errormsg(style="color:red;text-align:left;")
                 br
                 h6 Example: CN(C)CCCN1C2=CC=CC=C2SC2=C1C=C(C=C2)C(C)=O , 126-12-5 , Aspirin
-              h4 Or
-              .well
-                label.control-label
-                  p
-                  h5
-                    font(color='#616D7E') Upload a sdf file:
-                  p
-                input#myinput2.span2(type='file', name='molecularFile', style="width:200px;")
-                br
-                br
-                a(href="./static/test.sdf") Example
+                p Double ring species:<input style="vertical-align:0;width:40px;margin-left:10px;" name='significant' type="text" value="55" placeholder="55">
+          .row
           .row
             .span7
               hr(style='border-top: 3px solid #eeeeee; border-bottom: 3px solid #ffffff;')
@@ -70,13 +83,34 @@ block content
                 br
                 .btn-toolbar
                   .btn-group.span3
-                    button.btn.btn-primary.span3(type='submit', data-type="all" style='padding: 8px 20px')
+                    button.btn.btn-primary.span3(type='submit', data-type="Step1SQL" style='padding: 8px 20px')
                       i.icon-play.icon-white
-                      b Based on Rules From Data Mining 
+                      b Replace (SQL) 
                   .btn-group
-                    button.btn.btn-primary.span3(type='submit', data-type="sim" style='padding: 8px 20px')
+                    button.btn.btn-primary.span3(type='submit', data-type="Step1chemfp" style='padding: 8px 20px')
                       i.icon-play.icon-white
-                      b Based on Similarity Comparision
+                      b Replace (fast similarity) 
+                .btn-toolbar
+                  .btn-group.span3
+                    button.btn.btn-success.span3(type='submit', data-type="Step1grow" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Grow (SQL) 
+                  .btn-group
+                    button.btn.btn-success.span3(type='submit', data-type="Step1small" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Grow (Small)
+                .btn-toolbar
+                  .btn-group.span3
+                    button.btn.btn-warning.span3(type='submit', data-type="Step1pro" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Replace (pro similarity)
+                  .btn-group
+                    button.btn.btn-warning.span3(type='submit', data-type="ring" style='padding: 8px 20px')
+                      i.icon-play.icon-white
+                      b Replace two ring
+ 
+
+                
     hr
   // 悬浮球
   div.cal-mask(style="display:none;")

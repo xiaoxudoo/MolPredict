@@ -1,0 +1,39 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    //.hero-unit
+    //  h2 Welcome to Structure-Guided Drug Design System 
+    .hero-unit
+      h2 How to use MolGpKa?
+    .hero-unit
+      h2
+      h3  1. On the xundrug.cn/molgpka website, please input a molecule (SMILES format) and then click the predict button. You can input the SMILES string directly, or you can draw a molecule through the JME molecule editor. 
+      p
+      br     
+      h2
+         img(src='/pkcsm/static/img/molgpka_tutorial_1.png', style='border: none;', width='1100')
+
+    .hero-unit
+      h3  2. The server extracts all ionization centers on the input molecule and predicts pKa for each ionizable group by graph-convolutional neural network. The result page shows information of all ionization centers and predicted pka.
+      p    
+      br
+      h2
+         img(src='/pkcsm/static/img/molgpka_tutorial_2.png', style='border: none;', width='950')
+    .hero-unit
+      h3 Example for pka prediction with MolGpKa API 
+      li: a(href='/pkcsm/static/img/molgpka_api_example.py') MolGpka_api_example
+
+
+    .hero-unit
+      h3 Contact
+      h2     
+      p If you have any question about MolGpKa, please contact:
+      p Changge Ji 
+      p Chicago.ji@gmail.com
+
+
+
+block scripts
+  

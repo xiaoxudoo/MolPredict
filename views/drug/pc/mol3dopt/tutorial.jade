@@ -1,0 +1,43 @@
+extends ./layouts/layout
+
+block content
+  // MAIN CONTENT
+  .container
+    //.hero-unit
+    //  h2 Welcome to Structure-Guided Drug Design System 
+    .hero-unit
+      h2 How to use Mol3DOpt ?
+    .hero-unit
+      h2
+      h3  1. On the xundrug.cn/mol3dopt website, please input a protein and a ligand file and then click one of the button in 'Design method' box. 
+      p
+      br     
+      h2
+         img(src='/pkcsm/static/img/mol3dopt_1.png', style='border: none;', width='1000')
+
+    .hero-unit
+      h3  2. The system detect all replacable substructures or growing points on the input molecule. Please select the substructure or growing point you want to optimize and click 'Submit' button and wait for two minitues.
+      p    
+      br
+      h2
+         img(src='/pkcsm/static/img/mol3dopt_2.png', style='border: none;', width='1000')
+    .hero-unit
+      h3  3. The system find suitable fragments that fit well with local protein environment and assemble new molecule. The result page shows information on newly generated analogues.
+      p 
+      br
+      h2
+         img(src='/pkcsm/static/img/mol3dopt_3.png', style='border: none;', width='1000')
+
+
+
+    .hero-unit
+      h3 Contact
+      h2     
+      p If you have any question about Mol3DOpt, please contact:
+      p Changge Ji 
+      p Chicago.ji@gmail.com
+
+
+
+block scripts
+  
