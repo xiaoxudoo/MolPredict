@@ -106,7 +106,6 @@ exports.cal_opt_step_one = function (req, res, next) {
         res.render(`drug/pc/${routeName}/error.jade`, { 'error': rst.msg, 'accesscount': pvcount(0) })
         return false;
       } else {
-	console.log('debug');
         const py = spawn('python', [calTypePy]);
         const data = [];
         data.push(mol, filePath, LigPath);
@@ -132,7 +131,7 @@ exports.cal_opt_step_one = function (req, res, next) {
         });
 
         py.stdin.write(JSON.stringify(data));
-        
+
         py.stdin.end();
       }
     });
